@@ -4,6 +4,7 @@ source ~/.bash/config.bash
 source ~/.bash/env.bash
 
 export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:"${PATH}"
+export PATH=/Applications/MacVim.app/Contents/bin/:"${PATH}"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
