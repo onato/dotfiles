@@ -11,3 +11,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
 export PATH="$HOME/.yarn/bin:$PATH"
+
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+
