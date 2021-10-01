@@ -20,3 +20,5 @@ DerivedData
 
 *.orig
 tags
+exceed.code-workspace
+*.env

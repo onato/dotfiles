@@ -1,6 +1,6 @@
 set nocompatible
 
-call pathogen#infect()
+execute pathogen#infect()
 runtime! macros/matchit.vim
 
 filetype plugin indent on
@@ -41,7 +41,7 @@ set number
 set ruler
 syntax on
 
-let mapleader = ","
+let mapleader = " "
 
 set shell=bash
 
@@ -88,6 +88,9 @@ autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal g`\"" |
   \ endif
+
+". when in visual mode
+:xnoremap . :norm.<CR>
 
 " Easier window movement
 :nnoremap <C-H> <C-W>h

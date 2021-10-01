@@ -1,6 +1,6 @@
 [user]
-	name = Ben Scheirman
-	email = ben@scheirman.com
+	name = Stephen Williams
+	email = stephen@onato.com
 
 [color]
 	ui = auto
@@ -31,8 +31,9 @@
 	tool = Kaleidoscope
 
 [core]
-	excludesfile = /Users/ben/.gitignore_global
+	excludesfile = /Users/stephenwilliams/.gitignore_global
 	editor = vim
+	precomposeUnicode = true
 
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
@@ -43,7 +44,6 @@
 	trustExitCode = true
 
 [init]
-	templatedir = ~/Dropbox/dotfiles/.git_template
 
 [mergetool "Kaleidoscope"]
 	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
@@ -63,8 +63,11 @@
 	smudge = git hawser smudge %f
 	required = true
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 	required = true
+	process = git-lfs filter-process
 [credential]
-	helper = osxkeychain
+	helper = store
+[commit]
+	template = /Users/stephenwilliams/.git_template/commit

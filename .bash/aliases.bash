@@ -1,3 +1,12 @@
+alias deploy="bundle exec fastlane deploy_all"
+alias burnpack="bundle install && yarn install && ./bin/webpack"
+alias bi="bundle install"
+alias webserver="ruby -run -e httpd -- -p 5000 ."
+
+
+
+
+
 alias ..="cd .."
 
 # quick edit aliases
@@ -11,6 +20,7 @@ alias vim='mvim -v'
 alias ds='du -h -d 1'
 
 alias ll='ls -l'
+alias la='ls -la'
 alias cpwd='pwd | pbcopy' #copy working directory
 alias cpdir=cpwd
 
@@ -31,6 +41,14 @@ alias rs='bundle exec rails server'
 alias r='rake'
 alias rmig='bundle exec rake db:migrate'
 alias rc='bundle exec rails console'
+
+# Fastlane
+function bef {
+  bundle exec fastlane $*
+}
+function push {
+  xcrun simctl push booted $*
+}
 
 # CocoaPods
 alias pod-dev=$HOME/projects/CocoaPods/bin/pod

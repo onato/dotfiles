@@ -1,0 +1,13 @@
+########50 characters############################
+########72 characters##################################################
+#
+# Status Indicator                                              Meaning
+# F                                                             Feature
+# B                                                             Bug fix
+# !!!                                          Non-provable refactoring
+# c                                    Comments only (added or deleted)
+# d                           Developer documentation (non-user facing)
+# e                    Environment (non-code) changes (for development)
+# t                                                           Test only
+# r                                       Provable (manual) refactoring
+# a                                                Automated formatting

@@ -3,15 +3,11 @@ source ~/.bash/aliases.bash
 source ~/.bash/config.bash
 source ~/.bash/env.bash
 
-export PATH=/Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin:"${PATH}"
 export PATH=/Applications/MacVim.app/Contents/bin/:"${PATH}"
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
-
-export PATH="$HOME/.yarn/bin:$PATH"
+export PATH=/Users/stephenwilliams/Library/Python/2.7/bin:"${PATH}"
+export PATH=/Applications/Postgres.app/Contents/Versions/9.5/bin:"${PATH}"
 
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
+chruby ruby-2.5.7
 
