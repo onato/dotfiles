@@ -1,0 +1,8 @@
+brew "bat"
+brew "ripgrep"
+brew "diff-so-fancy"
+
+brew "cloc"
+brew "gh"
+brew "hugo"
+brew "python3"

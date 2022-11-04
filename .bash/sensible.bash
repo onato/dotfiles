@@ -1,6 +1,9 @@
 # Prevent file overwrite on stdout redirection
 set -o noclobber
 
+# Vim key bindings
+bindkey -v
+
 # Append to the history file, don't overwrite it
 setopt APPEND_HISTORY
 
@@ -20,3 +23,4 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history"
 # Useful timestamp format
 HISTTIMEFORMAT='%F %T '
 
+export EDITOR=vim

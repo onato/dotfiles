@@ -1,10 +1,14 @@
+alias cat="bat"
 alias deploy="bundle exec fastlane deploy_all"
 alias burnpack="bundle install && yarn install && ./bin/webpack"
 alias bi="bundle install"
-alias webserver="ruby -run -e httpd -- -p 5000 ."
+alias webserver="open http://localhost:5001; ruby -run -e httpd -- -p 5001 ."
 
-
-
+# Use Neovim as "preferred editor"
+export VISUAL=nvim
+# Use Neovim instead of Vim or Vi
+alias vim=nvim
+alias vi=nvim”
 
 
 alias ..="cd .."
@@ -12,9 +16,6 @@ alias ..="cd .."
 # quick edit aliases
 alias reload="source ~/.bash/aliases.bash"
 alias ea='vim ~/.bash/aliases.bash && reload'
-
-# use terminal mvim
-alias vim='mvim -v'
 
 # See disk usage in the current folder only
 alias ds='du -h -d 1'
@@ -54,23 +55,9 @@ function push {
 alias pod-dev=$HOME/projects/CocoaPods/bin/pod
 
 # bundler
-alias bec='bundle exec cucumber'
 function be() {
   bundle exec $*
 }
-
-#Heroku
-function hrmig() {
-  heroku rake db:migrate --app $1
-}
-
-function hrdeploy {
-  rake heroku:deploy app=$1
-}
-
-# Chef
-alias kc='knife cookbook'
-alias kcu='knife cookbook upload'
 
 #Git
 alias g='git status'

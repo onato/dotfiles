@@ -88,6 +88,7 @@ ssh_load_autocomplete()
 
 ssh_load_autocomplete
 
-# Git completion for bash
-git_completion=~/.bash/git-completion.bash
-[ -f $git_completion ] && source $git_completion
+# auto-completion
+if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
+  . /opt/local/etc/profile.d/bash_completion.sh
+fi
