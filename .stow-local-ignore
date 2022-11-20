@@ -1,0 +1,5 @@
+\.git
+Brewfile.*
+zsh
+.DS_Store
+
