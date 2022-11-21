@@ -36,6 +36,7 @@ brew "shellcheck"
 brew "jq"
 brew "radare2" # reverse engineering
 cask "devutils"
+cask "thor"
 cask "charles"
 cask "postman"
 # cask "docker" 
