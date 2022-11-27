@@ -1,5 +1,6 @@
 vim.keymap.set('n', '<F1>', ':FloatermToggle scratch<CR>')
 vim.keymap.set('t', '<F1>', '<C-\\><C-n>:FloatermToggle scratch<CR>')
+vim.keymap.set('n', '<leader>g', ':FloatermNew lazygit<CR>')
 
 vim.g.floaterm_gitcommit = 'floaterm'
 vim.g.floaterm_autoinsert = 1

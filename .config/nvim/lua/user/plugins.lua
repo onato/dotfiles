@@ -328,6 +328,13 @@ use({
 })
 
 use({
+  "folke/which-key.nvim",
+  config = function()
+    require("which-key").setup()
+  end
+})
+
+use({
   'antoinemadec/FixCursorHold.nvim',
   config = function()
     vim.g.cursorhold_updatetime = 100
@@ -346,22 +353,4 @@ vim.cmd([[
     autocmd BufWritePost plugins.lua source <afile>
   augroup end
 ]])
-
-use {
-  "folke/which-key.nvim",
-  config = function()
-    require("which-key").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
-  end
-}
-
-use({
-  'liuchengxu/vim-which-key',
-  config = function()
-    require('user.plugins.vim-which-key')
-  end,
-})
 
