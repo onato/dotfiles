@@ -28,7 +28,7 @@ vim.keymap.set('i', ';;', '<Esc>A;<Esc>')
 vim.keymap.set('i', ',,', '<Esc>A,<Esc>')
 
 -- Open the current file in the default program (on Mac this should just be just `open`)
-vim.keymap.set('n', '<leader>x', ':!xdg-open %<cr><cr>')
+vim.keymap.set('n', '<leader>x', ':!open %<cr><cr>')
 
 -- Disable annoying command line thing
 vim.keymap.set('n', 'q:', ':q<CR>')
@@ -44,3 +44,9 @@ vim.keymap.set('i', '<A-j>', '<Esc>:move .+1<CR>==gi')
 vim.keymap.set('i', '<A-k>', '<Esc>:move .-2<CR>==gi')
 vim.keymap.set('x', '<A-j>', ":move '>+1<CR>gv-gv")
 vim.keymap.set('x', '<A-k>', ":move '<-2<CR>gv-gv")
+
+local wk = require("which-key")
+wk.register({
+  x = { "<cmd>:!open %<cr><cr>", "Open in External App" }
+}, { prefix = "<leader>" })
+
