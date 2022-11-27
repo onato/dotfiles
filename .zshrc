@@ -1,5 +1,6 @@
 PATH=~/.emacs.d/bin:${PATH}
 PATH=~/go/bin:${PATH}
+PATH=~/.nodenv/shims:${PATH}
 
 PATH=~/.gvm/bin:${PATH}
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
@@ -44,6 +45,7 @@ alias z="vim ~/.zshrc"
 
 source ~/.dotfiles/zsh/shortcuts.zsh
 source ~/.dotfiles/zsh/aliases.zsh
+source ~/.dotfiles/zsh/sensible.zsh
 
 source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

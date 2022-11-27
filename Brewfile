@@ -30,8 +30,10 @@ cask "1password-cli"
 brew "cocoapods"
 
 # General Dev Tools
+cask "kitty"
 brew "git"
 cask "github"
+brew "lazygit"
 brew "shellcheck"
 brew "jq"
 brew "radare2" # reverse engineering
@@ -39,9 +41,11 @@ cask "devutils"
 cask "thor"
 cask "charles"
 cask "postman"
+#brew "newman" # postman test runner
 # cask "docker" 
 brew "tmux"
 brew "stow"
+cask "syntax-highlight"
 
 # Programming Languages
 brew "pyenv"
@@ -50,13 +54,24 @@ brew "rbenv"
 brew "rustup-init"
 brew "golang"
 
+# Language Servers
+brew "lua-language-server"
+
+# Programming Language Tools
+brew "luarocks"
+
+# Linters
+brew "proselint"
+brew "gitlint"
+brew "stylua"
+
 # Frameworks
-brew "node"
+brew "nodenv"
+brew "nodenv/nodenv/nodenv-default-packages"
 
 # Browsers
 cask "firefox"
 cask "google-chrome"
-
 
 # Command Line Utils
 brew "ImageMagick"
@@ -69,11 +84,12 @@ brew "fd"
 brew "tldr"
 brew "zsh-syntax-highlighting"
 brew "zsh-autosuggestions"
+brew "ispell"
 
 # Editors
 brew "nvim"
-# brew "emacs"
-cask "emacs"
+brew "emacs"
+# cask "emacs"
 
 # Email
 brew "offlineimap"

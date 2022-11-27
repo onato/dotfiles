@@ -83,10 +83,14 @@
    (mu4e-trash-folder      . "/Intellum/[Gmail].Trash")
    (smtpmail-smtp-user     . "swilliams@intellum.com"))
  t)
+; (setq mu4e-compose-signature "Cheers,\nStephen")
+(add-hook 'mu4e-index-updated-hook 'mu4e~headers-do-auto-update)
+(after! auth-source
+  (setq auth-sources (nreverse auth-sources)))
 
 (setq smtpmail-smtp-server "smtp.gmail.com"
       smtpmail-smtp-service 465
-      smtpmail-stream-type  'ssl)
+      smtpmail-stream-type 'ssl)
 
 (setq mu4e-maildir-shortcuts
       '(
@@ -130,7 +134,7 @@
 (defun =my-calendar ()
   "Activate (or switch to) *my* `calendar' in its workspace."
   (interactive)
-  (if (featurep! :ui workspaces) ;; create workspace (if enabled)
+  (if (modulep! :ui workspaces) ;; create workspace (if enabled)
       (progn
         (+workspace-switch "Calendar" t)
         (doom/switch-to-scratch-buffer)
@@ -144,3 +148,8 @@
 
 ;; Projects
 (setq projectile-project-search-path '("~/Documents/Code"))
+
+;; REST Client
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((restclient . t)))
