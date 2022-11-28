@@ -53,6 +53,7 @@ brew "pipenv"
 brew "rbenv"
 brew "rustup-init"
 brew "golang"
+brew "wabt" # webassembly toold
 
 # Language Servers
 brew "lua-language-server"
