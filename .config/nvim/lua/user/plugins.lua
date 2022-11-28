@@ -38,10 +38,10 @@ use({
 })
 use('christoomey/vim-tmux-navigator')
 use('farmergreg/vim-lastplace') -- Intelligently reopen files at your last edit position.
-use('tpope/vim-commentary') -- When combined with a set of tmux key bindings, the plugin will allow you to navigate 
+use('tpope/vim-commentary') -- When combined with a set of tmux key bindings, the plugin will allow you to navigate
                             -- seamlessly between vim and tmux splits using a consistent set of hotkeys.
-use('tpope/vim-repeat') -- Repeat.vim remaps . in a way that plugins can tap into it.
-use('tpope/vim-surround') -- Surround.vim is all about "surroundings": parentheses, brackets, quotes, XML tags, and more.
+use('tpope/vim-repeat') -- Repeat.vim remaps "." in a way that plugins can tap into it.
+use('tpope/vim-surround') -- Surround.vim is all about surrounding: parentheses, brackets, quotes, XML tags, and more.
 use('tpope/vim-eunuch') -- Adds :Rename, :SudoWrite
 use('tpope/vim-unimpaired') -- Adds [b and other handy mappings
 use('tpope/vim-sleuth') -- Indent autodetection with editorconfig support
