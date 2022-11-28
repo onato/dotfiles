@@ -12,6 +12,13 @@ alias la='exa -a'
 alias ll='exa -lah'
 alias ls='exa --color=auto'
 
+# Timezones
+alias tzPST="echo `env TZ=US/Pacific date +%H:%M`"
+alias tzEST="echo `env TZ=US/New_York date +%H:%M`"
+alias tzCET="echo `env TZ=Europe/Berlin date +%H:%M`"
+alias tzBST="echo `env TZ=Europe/London date +%H:%M`"
+alias tzAEST="echo `env TZ=Australia/Brisbane date +%H:%M`"
+
 #Finder
 alias o='open . &'
 
