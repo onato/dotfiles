@@ -30,9 +30,6 @@ vim.keymap.set('v', 'p', '"_dP')
 -- Open the current file in the default program (on Mac this should just be just `open`)
 vim.keymap.set('n', '<leader>x', ':!open %<cr><cr>')
 
--- Disable annoying command line thing
-vim.keymap.set('n', 'q:', ':q<CR>')
-
 -- Resize with arrows
 vim.keymap.set('n', '<C-Up>', ':resize +2<CR>')
 vim.keymap.set('n', '<C-Down>', ':resize -2<CR>')
