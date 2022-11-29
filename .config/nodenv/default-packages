@@ -6,4 +6,5 @@ npm-check-updates
 tree-sitter-cli
 typescript
 vscode-langservers-extracted
-
+@tailwindcss/language-server
+emmet-ls
