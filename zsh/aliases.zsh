@@ -2,6 +2,9 @@ alias reload="source ~/.zshrc"
 alias aliases="vim ~/.dotfiles/zsh/aliases.zsh && reload"
 alias rebrew="brew bundle install --file ~/.dotfiles/Brewfile"
 alias brewfile="vim ~/.dotfiles/Brewfile && rebrew"
+alias vimrc="vim ~/.config/nvim/lua/custom/init.lua"
+
+alias cat=bat
 
 alias deploy="bundle exec fastlane deploy_all"
 alias bi="bundle install"
@@ -32,6 +35,7 @@ function be() {
 }
 
 #Git
+alias lg='lazygit'
 alias g='git status'
 alias gb='git branch'
 alias grc='git rebase --continue'
@@ -77,7 +81,7 @@ function xc() {
     .map {|x| [x, x.scan(/\//).count]}
     .sort {|a, b| a.last <=> b.last || a.first <=> b.first }
     .map {|x| x.first }
-  puts files.first
+  puts (files + Dir.glob('Package.swift')).first
 EOF
 )
 

@@ -1,11 +1,22 @@
+CDPATH=~/Documents/Code/
+setopt auto_cd # allow typing just the name of the directory to change into it.
+setopt append_history # Make sure windows don't overwrite each others history when exiting all at the same time.
+setopt share_history # Share history between windows.
+
+PATH=~/Documents/Code/sonar-scanner-4.8.0.2856-macosx/bin:${PATH}
 PATH=~/.emacs.d/bin:${PATH}
 PATH=~/go/bin:${PATH}
+PATH=~/bin:${PATH}
 PATH=~/.nodenv/shims:${PATH}
 
 PATH=~/.gvm/bin:${PATH}
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 . "$HOME/.cargo/env"
+
+# case insensitive completion
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -40,12 +51,12 @@ fi
 export SUDO_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 
-alias cat=bat
-alias z="vim ~/.zshrc"
-
 source ~/.dotfiles/zsh/shortcuts.zsh
 source ~/.dotfiles/zsh/aliases.zsh
 source ~/.dotfiles/zsh/sensible.zsh
+source ~/.env
+
+eval "$(zoxide init zsh)"
 
 source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -54,3 +65,8 @@ source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
 # rbenv
 eval "$(/opt/homebrew/bin/rbenv init - zsh)"
 export PATH="/opt/homebrew/opt/postgresql@12/bin:$PATH"
+
+# Save command history
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000

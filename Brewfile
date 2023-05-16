@@ -12,6 +12,7 @@ tap "homebrew/cask-fonts"
 brew "github-keygen"
 brew "gnupg"
 brew "openssl"
+brew "httpd"
 
 # Keyboard/Mouse
 cask "karabiner-elements"
@@ -33,6 +34,7 @@ brew "cocoapods"
 cask "kitty"
 brew "git"
 cask "github"
+brew "bfg" # Cleaning the git history
 brew "lazygit"
 brew "shellcheck"
 brew "jq"
@@ -51,9 +53,14 @@ cask "syntax-highlight"
 brew "pyenv"
 brew "pipenv"
 brew "rbenv"
+# brew "rust"
+brew "cargo-nextest"
 brew "rustup-init"
+brew "rust-analyzer"
 brew "golang"
 brew "wabt" # webassembly toold
+brew "wasmer"
+brew "llvm"
 
 # Language Servers
 brew "lua-language-server"
@@ -78,6 +85,10 @@ cask "google-chrome"
 brew "ImageMagick"
 brew "fzf"
 brew "bat"
+brew "zoxide"
+brew "bandwhich"
+brew "tokei"
+brew "dust"
 brew "exa"
 brew "diff-so-fancy"
 brew "ripgrep"
@@ -105,6 +116,7 @@ brew "romkatv/powerlevel10k/powerlevel10k"
 # App Store Apps
 mas "Xcode", id: 497799835
 cask "xcodes"
+cask "microsoft-remote-desktop"
 mas "WireGuard", id: 1451685025
 mas "Speedtest by Ookla", id: 1153157709
 
