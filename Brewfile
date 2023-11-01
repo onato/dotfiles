@@ -1,6 +1,7 @@
 tap "homebrew/core"
 tap "homebrew/bundle"
 tap "homebrew/cask" 
+tap "a7ex/homebrew-formulae" # for xcresultparser
 
 # Homebrew cask formulae for Logitech Options
 tap "homebrew/cask-drivers"
@@ -29,22 +30,31 @@ cask "1password-cli"
 # Swift related tools
 # brew "carthage"
 brew "cocoapods"
+brew "swiftformat"
+brew "swiftgen"
+brew "xcbeautify"
+brew "xcresultparser"
 
 # General Dev Tools
-cask "kitty"
+cask "kitty" # terminal
+cask "warp" # terminal
+cask "alacritty" # terminal
 brew "git"
+brew "bfg" # tool for cleaning up git repos
 cask "github"
 brew "bfg" # Cleaning the git history
 brew "lazygit"
 brew "shellcheck"
 brew "jq"
+brew "cmake"
 brew "radare2" # reverse engineering
 cask "devutils"
 cask "thor"
 cask "charles"
 cask "postman"
 #brew "newman" # postman test runner
-# cask "docker" 
+cask "docker" 
+brew "act"
 brew "tmux"
 brew "stow"
 cask "syntax-highlight"
@@ -54,13 +64,23 @@ brew "pyenv"
 brew "pipenv"
 brew "rbenv"
 # brew "rust"
-brew "cargo-nextest"
+# brew "cargo-nextest" # don't install this because it installs rust
 brew "rustup-init"
 brew "rust-analyzer"
 brew "golang"
 brew "wabt" # webassembly toold
 brew "wasmer"
 brew "llvm"
+brew "r"
+cask "rstudio"
+brew "gdal" # required to the DOC R Work
+brew "udunits" # required to the DOC R Work
+brew "fribidi" # required to the DOC R Work
+
+brew "php"
+
+# Databases
+brew "sqlite"
 
 # Language Servers
 brew "lua-language-server"
@@ -80,9 +100,11 @@ brew "nodenv/nodenv/nodenv-default-packages"
 # Browsers
 cask "firefox"
 cask "google-chrome"
+cask "tor-browser"
 
 # Command Line Utils
 brew "ImageMagick"
+brew "exiftool"
 brew "fzf"
 brew "bat"
 brew "zoxide"
@@ -116,7 +138,10 @@ brew "romkatv/powerlevel10k/powerlevel10k"
 # App Store Apps
 mas "Xcode", id: 497799835
 cask "xcodes"
+cask "swiftformat-for-xcode"
 cask "microsoft-remote-desktop"
 mas "WireGuard", id: 1451685025
 mas "Speedtest by Ookla", id: 1153157709
+cask "vlc"
+brew "youtube-dl"
 

@@ -1,12 +1,16 @@
 CDPATH=~/Documents/Code/
 setopt auto_cd # allow typing just the name of the directory to change into it.
+setopt autopushd # push the old directory onto the directory stack on cd.
 setopt append_history # Make sure windows don't overwrite each others history when exiting all at the same time.
 setopt share_history # Share history between windows.
+
+ANDROID_HOME=/Users/swilliams/Library/Android/sdk
 
 PATH=~/Documents/Code/sonar-scanner-4.8.0.2856-macosx/bin:${PATH}
 PATH=~/.emacs.d/bin:${PATH}
 PATH=~/go/bin:${PATH}
 PATH=~/bin:${PATH}
+PATH=~/.local/bin:${PATH}
 PATH=~/.nodenv/shims:${PATH}
 
 PATH=~/.gvm/bin:${PATH}
@@ -18,16 +22,12 @@ PATH=~/.gvm/bin:${PATH}
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^ ' autosuggest-accept
 
 bindkey -e
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --color=never --hidden'
@@ -43,7 +43,7 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 alias v="vim"
 
 if [ $(command -v nvim) ]; then
-  export EDITOR=$(which nvim)
+  export EDITOR=$(which lvim)
   alias vim=$EDITOR
   alias v=$EDITOR
 fi
@@ -70,3 +70,11 @@ export PATH="/opt/homebrew/opt/postgresql@12/bin:$PATH"
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
+setopt HIST_EXPIRE_DUPS_FIRST
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi

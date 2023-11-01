@@ -1,19 +1,30 @@
+alias -s {rs,md}=vim
+
 alias reload="source ~/.zshrc"
 alias aliases="vim ~/.dotfiles/zsh/aliases.zsh && reload"
 alias rebrew="brew bundle install --file ~/.dotfiles/Brewfile"
 alias brewfile="vim ~/.dotfiles/Brewfile && rebrew"
 alias vimrc="vim ~/.config/nvim/lua/custom/init.lua"
+alias show_sim_touch="defaults write com.apple.iphonesimulator ShowSingleTouches 1"
 
 alias cat=bat
 
 alias deploy="bundle exec fastlane deploy_all"
 alias bi="bundle install"
 alias webserver="open http://localhost:5001; ruby -run -e httpd -- -p 5001 ."
+alias list_feats="git log $(git tag --sort=-creatordate | head -n 2 | tail -n 1)...HEAD --pretty=format:'%<(20)%ar %s' | grep 'feat:'"
 
 alias l='exa'
 alias la='exa -a'
 alias ll='exa -lah'
 alias ls='exa --color=auto'
+
+# Projects
+alias m='cd mobile-core'
+alias e='cd exceed-ios-simplified'
+alias d='cd exceed-ios'
+alias s='cd tribe-ios'
+alias t='s'
 
 # Timezones
 alias tzPST="echo `env TZ=US/Pacific date +%H:%M`"
@@ -29,6 +40,7 @@ alias o='open . &'
 function bef {
   bundle exec fastlane $*
 }
+
 # bundler
 function be() {
   bundle exec $*
