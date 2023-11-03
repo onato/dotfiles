@@ -3,9 +3,6 @@ tap "homebrew/bundle"
 tap "homebrew/cask" 
 tap "a7ex/homebrew-formulae" # for xcresultparser
 
-# Homebrew cask formulae for Logitech Options
-tap "homebrew/cask-drivers"
-
 tap "buo/cask-upgrade"
 tap "homebrew/cask-fonts"
 
@@ -20,15 +17,13 @@ cask "karabiner-elements"
 cask "logi-options-plus"
 cask "logitech-options"
 
-brew "mas"
+brew "mas" # Mac App Store command-line interface
 brew "gh"
 cask "carbon-copy-cloner"
-cask "amethyst"
 cask "1password"
 cask "1password-cli"
 
 # Swift related tools
-# brew "carthage"
 brew "cocoapods"
 brew "swiftformat"
 brew "swiftgen"
@@ -38,11 +33,9 @@ brew "xcresultparser"
 # General Dev Tools
 cask "kitty" # terminal
 cask "warp" # terminal
-cask "alacritty" # terminal
 brew "git"
 brew "bfg" # tool for cleaning up git repos
 cask "github"
-brew "bfg" # Cleaning the git history
 brew "lazygit"
 brew "shellcheck"
 brew "jq"
@@ -54,10 +47,10 @@ cask "charles"
 cask "postman"
 #brew "newman" # postman test runner
 cask "docker" 
-brew "act"
+brew "act" # Run your GitHub Actions locally
 brew "tmux"
-brew "stow"
-cask "syntax-highlight"
+brew "stow" # Install files from .dotfiles
+cask "syntax-highlight" # Quicklook extension for source files
 
 # Programming Languages
 brew "pyenv"
@@ -76,7 +69,6 @@ cask "rstudio"
 brew "gdal" # required to the DOC R Work
 brew "udunits" # required to the DOC R Work
 brew "fribidi" # required to the DOC R Work
-
 brew "php"
 
 # Databases
@@ -107,14 +99,13 @@ brew "ImageMagick"
 brew "exiftool"
 brew "fzf"
 brew "bat"
-brew "zoxide"
-brew "bandwhich"
-brew "tokei"
-brew "dust"
-brew "exa"
+brew "zoxide" # use z or ze instead of cd
+brew "tokei" # Program that allows you to count code, quickly
+brew "dust" # du + rust = dust. Like du but more intuitive. Displays how much space each directory is using.
+brew "exa" # Modern replacement for 'ls'
 brew "diff-so-fancy"
 brew "ripgrep"
-brew "fd"
+brew "fd" # User-friendly alternative to find
 brew "tldr"
 brew "zsh-syntax-highlighting"
 brew "zsh-autosuggestions"
@@ -122,12 +113,6 @@ brew "ispell"
 
 # Editors
 brew "nvim"
-brew "emacs"
-# cask "emacs"
-
-# Email
-brew "offlineimap"
-brew "mu"
 
 #Fonts
 cask "sf-symbols"
@@ -137,9 +122,7 @@ brew "romkatv/powerlevel10k/powerlevel10k"
 
 # App Store Apps
 mas "Xcode", id: 497799835
-cask "xcodes"
 cask "swiftformat-for-xcode"
-cask "microsoft-remote-desktop"
 mas "WireGuard", id: 1451685025
 mas "Speedtest by Ookla", id: 1153157709
 cask "vlc"
