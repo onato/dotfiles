@@ -159,8 +159,8 @@ require('lazy').setup({
         mapping = cmp.mapping.preset.insert({
           ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
           ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-          ["<C-Space>"] = cmp.mapping.complete(),   -- show completion suggestions
-          ["<C-e>"] = cmp.mapping.abort(),          -- close completion window
+          ["<C-Space>"] = cmp.mapping.complete(),     -- show completion suggestions
+          ["<C-e>"] = cmp.mapping.abort(),            -- close completion window
           ["<CR>"] = cmp.mapping.confirm({ select = false, behavior = cmp.ConfirmBehavior.Replace }),
           ["<C-b>"] = cmp.mapping(function(fallback)
             if luasnip.jumpable(-1) then
@@ -181,8 +181,8 @@ require('lazy').setup({
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "luasnip" }, -- snippets
-          { name = "buffer" }, -- text within current buffer
-          { name = "path" },  -- file system paths
+          { name = "buffer" },  -- text within current buffer
+          { name = "path" },    -- file system paths
         }),
         -- configure lspkind for vs-code like pictograms in completion menu
         formatting = {
@@ -302,6 +302,10 @@ require('lazy').setup({
     -- apply the config and additionally load fzf-native
     config = function(_, opts)
       local telescope = require("telescope")
+
+      local find_files = { hidden = true }
+      opts.pickers = { find_files = find_files }
+
       telescope.setup(opts)
       telescope.load_extension("harpoon")
       telescope.load_extension("import")
