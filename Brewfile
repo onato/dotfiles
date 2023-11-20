@@ -29,6 +29,7 @@ brew "go-jira"
 # Swift related tools
 brew "cocoapods"
 brew "swiftformat"
+brew "swiftlint"
 brew "swiftgen"
 brew "xcbeautify"
 brew "xcresultparser"

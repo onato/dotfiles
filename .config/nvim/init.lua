@@ -117,9 +117,9 @@ require('lazy').setup({
         },
         root_dir = function(filename, _)
           return util.root_pattern("buildServer.json")(filename)
-            or util.root_pattern("*.xcodeproj", "*.xcworkspace")(filename)
-            or util.find_git_ancestor(filename)
-            or util.root_pattern("Package.swift")(filename)
+              or util.root_pattern("*.xcodeproj", "*.xcworkspace")(filename)
+              or util.find_git_ancestor(filename)
+              or util.root_pattern("Package.swift")(filename)
         end,
       })
     end,
@@ -140,59 +140,59 @@ require('lazy').setup({
       'rafamadriz/friendly-snippets',
     },
     config = function()
-    local cmp = require("cmp")
-    local luasnip = require("luasnip")
-    local lspkind = require("lspkind")
- 
-    -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
-    require("luasnip.loaders.from_vscode").lazy_load()
- 
-    cmp.setup({
-      completion = {
-        completeopt = "menu,menuone,preview",
-      },
-      snippet = { -- configure how nvim-cmp interacts with snippet engine
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
-        end,
-      },
-      mapping = cmp.mapping.preset.insert({
-        ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-        ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-        ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-        ["<C-e>"] = cmp.mapping.abort(), -- close completion window
-        ["<CR>"] = cmp.mapping.confirm({ select = false, behavior = cmp.ConfirmBehavior.Replace }),
-        ["<C-b>"] = cmp.mapping(function(fallback)
-          if luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-        ["<C-f>"] = cmp.mapping(function(fallback)
-          if luasnip.jumpable(1) then
-            luasnip.jump(1)
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-      }),
-      -- sources for autocompletion
-      sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "luasnip" }, -- snippets
-        { name = "buffer" }, -- text within current buffer
-        { name = "path" }, -- file system paths
-      }),
-      -- configure lspkind for vs-code like pictograms in completion menu
-      formatting = {
-        format = lspkind.cmp_format({
-          maxwidth = 50,
-          ellipsis_char = "...",
+      local cmp = require("cmp")
+      local luasnip = require("luasnip")
+      local lspkind = require("lspkind")
+
+      -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
+      require("luasnip.loaders.from_vscode").lazy_load()
+
+      cmp.setup({
+        completion = {
+          completeopt = "menu,menuone,preview",
+        },
+        snippet = { -- configure how nvim-cmp interacts with snippet engine
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+          ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+          ["<C-Space>"] = cmp.mapping.complete(),   -- show completion suggestions
+          ["<C-e>"] = cmp.mapping.abort(),          -- close completion window
+          ["<CR>"] = cmp.mapping.confirm({ select = false, behavior = cmp.ConfirmBehavior.Replace }),
+          ["<C-b>"] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          ["<C-f>"] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(1) then
+              luasnip.jump(1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
         }),
-      },
-    })
-  end,
+        -- sources for autocompletion
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "luasnip" }, -- snippets
+          { name = "buffer" }, -- text within current buffer
+          { name = "path" },  -- file system paths
+        }),
+        -- configure lspkind for vs-code like pictograms in completion menu
+        formatting = {
+          format = lspkind.cmp_format({
+            maxwidth = 50,
+            ellipsis_char = "...",
+          }),
+        },
+      })
+    end,
   },
 
   -- Useful plugin to show you pending keybinds.
@@ -236,7 +236,7 @@ require('lazy').setup({
     },
   },
 
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  { "catppuccin/nvim",      name = "catppuccin", priority = 1000 },
 
   {
     -- Set lualine as statusline
@@ -262,7 +262,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',  opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -278,7 +278,7 @@ require('lazy').setup({
         version = "^1.0.0",
       },
       {
-      "danielfalk/smart-open.nvim",
+        "danielfalk/smart-open.nvim",
         branch = "0.2.x",
         config = function() end,
         dependencies = {
@@ -460,7 +460,7 @@ local function live_grep_git_root()
   local git_root = find_git_root()
   if git_root then
     require('telescope.builtin').live_grep({
-      search_dirs = {git_root},
+      search_dirs = { git_root },
     })
   end
 end
@@ -495,6 +495,17 @@ vim.keymap.set('n', '<leader>tt', ':TestLast<cr>', { desc = 'Test Las[t]' })
 vim.keymap.set('n', '<leader>tv', ':TestVisit<cr>', { desc = 'Test [V]isit' })
 vim.keymap.set('n', '<leader>u', ':TestFile<cr>', { desc = 'Test Current File' })
 
+vim.keymap.set("n", "<leader>xl", "<cmd>XcodebuildToggleLogs<cr>", { desc = "Toggle Xcodebuild Logs" })
+vim.keymap.set("n", "<leader>xb", "<cmd>XcodebuildBuild<cr>", { desc = "Build Project" })
+vim.keymap.set("n", "<leader>xr", "<cmd>XcodebuildBuildRun<cr>", { desc = "Build & Run Project" })
+vim.keymap.set("n", "<leader>xt", "<cmd>XcodebuildTest<cr>", { desc = "Run Tests" })
+vim.keymap.set("n", "<leader>xT", "<cmd>XcodebuildTestClass<cr>", { desc = "Run This Test Class" })
+vim.keymap.set("n", "<leader>xX", "<cmd>XcodebuildPicker<cr>", { desc = "Show All Xcodebuild Actions" })
+vim.keymap.set("n", "<leader>xd", "<cmd>XcodebuildSelectDevice<cr>", { desc = "Select Device" })
+vim.keymap.set("n", "<leader>xp", "<cmd>XcodebuildSelectTestPlan<cr>", { desc = "Select Test Plan" })
+vim.keymap.set("n", "<leader>xs", "<cmd>XcodebuildFailingSnapshots<cr>", { desc = "Show Failing Snapshots" })
+vim.keymap.set("n", "<leader>xq", "<cmd>Telescope quickfix<cr>", { desc = "Show QuickFix List" })
+
 vim.keymap.set('n', '<leader>bb', ':bprev<cr>', { desc = '[B]ack' })
 vim.keymap.set('n', '<leader>bn', ':bnext<cr>', { desc = '[N]ext' })
 vim.keymap.set('n', '<leader>bl', require('telescope.builtin').buffers, { desc = '[L]ist buffers' })
@@ -509,15 +520,20 @@ vim.keymap.set("n", "<C-l>", function() ui.nav_file(3) end)
 vim.keymap.set("n", "<C-;>", function() ui.nav_file(4) end)
 
 vim.keymap.set('n', '<leader>mv',
-    "<cmd>lua require('telescope.builtin').find_files({search_dirs={'src/models'}, prompt_title='Models', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>", { desc = '[M]odels' })
+  "<cmd>lua require('telescope.builtin').find_files({search_dirs={'src/models'}, prompt_title='Models', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>",
+  { desc = '[M]odels' })
 vim.keymap.set('n', '<leader>mr',
-    "<cmd>lua require('telescope.builtin').find_files({search_file='_response', prompt_title='Responses', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>", { desc = '[R]esponses' })
+  "<cmd>lua require('telescope.builtin').find_files({search_file='_response', prompt_title='Responses', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>",
+  { desc = '[R]esponses' })
 vim.keymap.set('n', '<leader>mu',
-    "<cmd>lua require('telescope.builtin').find_files({search_file='default_*_use_case', prompt_title='Use Cases', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>", { desc = '[U]se Cases' })
+  "<cmd>lua require('telescope.builtin').find_files({search_file='default_*_use_case', prompt_title='Use Cases', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>",
+  { desc = '[U]se Cases' })
 vim.keymap.set('n', '<leader>mp',
-    "<cmd>lua require('telescope.builtin').find_files({search_dirs={'src/services/mappers'}, prompt_title='Mappers', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>", { desc = '[M]appers' })
+  "<cmd>lua require('telescope.builtin').find_files({search_dirs={'src/services/mappers'}, prompt_title='Mappers', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>",
+  { desc = '[M]appers' })
 vim.keymap.set('n', '<leader>mf',
-    "<cmd>lua require('telescope.builtin').find_files({search_dirs={'src/presenters/features'}, prompt_title='Features', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>", { desc = '[F]eatuers' })
+  "<cmd>lua require('telescope.builtin').find_files({search_dirs={'src/presenters/features'}, prompt_title='Features', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>",
+  { desc = '[F]eatuers' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -645,6 +661,7 @@ require('which-key').register {
   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
   ['<leader>t'] = { name = '[T]est', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+  ['<leader>x'] = { name = '[X]code', _ = 'which_key_ignore' },
 }
 
 -- mason-lspconfig requires that these setup functions are called in this order
