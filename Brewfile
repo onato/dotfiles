@@ -2,6 +2,8 @@ tap "homebrew/core"
 tap "homebrew/bundle"
 tap "homebrew/cask" 
 tap "a7ex/homebrew-formulae" # for xcresultparser
+tap "noahgorstein/tap"
+tap "arl/arl"
 
 tap "buo/cask-upgrade"
 tap "homebrew/cask-fonts"
@@ -22,6 +24,7 @@ brew "gh"
 cask "carbon-copy-cloner"
 cask "1password"
 cask "1password-cli"
+brew "go-jira"
 
 # Swift related tools
 brew "cocoapods"
@@ -31,14 +34,27 @@ brew "xcbeautify"
 brew "xcresultparser"
 
 # General Dev Tools
+cask "alacritty" # terminal
+cask "wezterm" # terminal
 cask "kitty" # terminal
 cask "warp" # terminal
+brew "nushell" # shell
+brew "starship" # shell prompt
 brew "git"
 brew "bfg" # tool for cleaning up git repos
 cask "github"
 brew "lazygit"
+brew "ranger" # file manager
+brew "lf" # file manager
+brew "yazi" 
+  brew "ffmpegthumbnailer"
+  brew "unar"
+  brew "poppler"
+
+brew "git-delta"
 brew "shellcheck"
 brew "jq"
+brew "jqp"
 brew "cmake"
 brew "radare2" # reverse engineering
 cask "devutils"
@@ -48,18 +64,23 @@ cask "postman"
 #brew "newman" # postman test runner
 cask "docker" 
 brew "act" # Run your GitHub Actions locally
-brew "tmux"
+brew "tmux" # terminal multiplexer
+brew "gitmux" # git info in the tmux status bar
+brew "zellij" # terminal multiplexer
 brew "stow" # Install files from .dotfiles
 cask "syntax-highlight" # Quicklook extension for source files
+brew "zoxide"
 
 # Programming Languages
 brew "pyenv"
 brew "pipenv"
 brew "rbenv"
+brew "rtx" # version manager for nvm, nodenv, pyenv, etc.
 # brew "rust"
 # brew "cargo-nextest" # don't install this because it installs rust
 brew "rustup-init"
 brew "rust-analyzer"
+brew "sccache" # cache for rust builds
 brew "golang"
 brew "wabt" # webassembly toold
 brew "wasmer"
@@ -105,20 +126,20 @@ brew "dust" # du + rust = dust. Like du but more intuitive. Displays how much sp
 brew "exa" # Modern replacement for 'ls'
 brew "diff-so-fancy"
 brew "ripgrep"
+brew "htop"
 brew "fd" # User-friendly alternative to find
 brew "tldr"
 brew "zsh-syntax-highlighting"
 brew "zsh-autosuggestions"
+brew "bash"
 brew "ispell"
+brew "tree"
 
 # Editors
 brew "nvim"
 
 #Fonts
 cask "sf-symbols"
-
-# Themes
-brew "romkatv/powerlevel10k/powerlevel10k"
 
 # App Store Apps
 mas "Xcode", id: 497799835
@@ -127,4 +148,5 @@ mas "WireGuard", id: 1451685025
 mas "Speedtest by Ookla", id: 1153157709
 cask "vlc"
 brew "youtube-dl"
+cask "obsidian"
 

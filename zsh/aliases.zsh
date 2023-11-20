@@ -1,14 +1,20 @@
 alias -s {rs,md}=vim
+bindkey '^ ' autosuggest-accept
 
 alias reload="source ~/.zshrc"
 alias aliases="vim ~/.dotfiles/zsh/aliases.zsh && reload"
 alias rebrew="brew bundle install --file ~/.dotfiles/Brewfile"
 alias brewfile="vim ~/.dotfiles/Brewfile && rebrew"
+alias bf="brewfile"
 alias vimrc="vim ~/.config/nvim/lua/custom/init.lua"
 alias show_sim_touch="defaults write com.apple.iphonesimulator ShowSingleTouches 1"
+alias tn="tmux new -s $(basename $(pwd))"
 
+alias r=ranger
 alias cat=bat
 
+alias w="wiki-tui"
+alias d="deploy"
 alias deploy="bundle exec fastlane deploy_all"
 alias bi="bundle install"
 alias webserver="open http://localhost:5001; ruby -run -e httpd -- -p 5001 ."
@@ -24,7 +30,6 @@ alias m='cd mobile-core'
 alias e='cd exceed-ios-simplified'
 alias d='cd exceed-ios'
 alias s='cd tribe-ios'
-alias t='s'
 
 # Timezones
 alias tzPST="echo `env TZ=US/Pacific date +%H:%M`"

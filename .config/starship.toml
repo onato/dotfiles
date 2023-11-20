@@ -1,0 +1,113 @@
+# Which is equivalent to
+format = """
+$custom\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$cmd_duration\
+$line_break\
+$time\
+$character"""
+
+# palette = "catppuccin_mocha"
+
+[directory]
+truncation_length = 3
+# truncation_symbol = "…/"
+
+[directory.substitutions]
+"exceed-ios-simplified" = ""
+"mobile-core" = ""
+"tribe-ios" = ""
+
+[character]
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
+
+[git_branch]
+format = "[$symbol$branch(:$remote_branch)]($style) "
+
+[git_status]
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+style = "cyan"
+conflicted = "​"
+untracked = "​"
+modified = "​"
+staged = "​"
+renamed = "​"
+deleted = "​"
+stashed = "≡"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bright-black"
+
+[cmd_duration]
+format = "[$duration]($style) "
+style = "yellow"
+
+# Get editor completions based on the config schema
+# "$schema" = 'https://starship.rs/config-schema.json'
+
+# [rust]
+# format = '[${symbol}](red bold)'
+
+# [swift]
+# format = '[${symbol}](red bold)'
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+format = '[$time ]($style)'
+style = "bright-black"
+
+[custom.foo]
+command = "echo 🚀"
+when = '0'
+
+[custom.exceed-ios-simplified]
+format = "[exceed-ios-simplified](bg:#33658A)[](fg:#33658A)"
+shell = 'bash'
+when = '[ "$PWD" == "/Users/swilliams/Documents/Code/exceed-ios-simplified" ]'
+
+[custom.mobile-core]
+format = "[mobile-core](bg:#4c873f)[](fg:#4c873f)"
+shell = 'bash'
+when = '[ "$PWD" == "/Users/swilliams/Documents/Code/mobile-core" ]'
+
+[custom.tribe-ios]
+format = "[tribe-ios](bg:#873f43)[](fg:#873f43)"
+shell = 'bash'
+when = '[ "$PWD" == "/Users/swilliams/Documents/Code/tribe-ios" ]'
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"

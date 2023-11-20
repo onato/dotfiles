@@ -11,6 +11,10 @@ reload("user.options")
 reload("user.keymappings")
 
 lvim.plugins = {
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  {
+    "ThePrimeagen/harpoon"
+  },
   {
     "nvim-telescope/telescope-ui-select.nvim",
     config = function()
@@ -91,6 +95,7 @@ lvim.plugins = {
   -- },
 }
 
+-- lvim.colorscheme = "catppuccin-mocha"
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {

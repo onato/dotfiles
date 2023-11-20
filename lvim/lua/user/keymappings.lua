@@ -9,13 +9,30 @@ lvim.builtin.which_key.mappings['f'] = {
 }
 lvim.lsp.buffer_mappings.normal_mode['<leader>lh'] = { vim.lsp.buf.hover, "Show documentation" }
 
+lvim.lsp.buffer_mappings.normal_mode['<leader>a'] = {
+  "<cmd>lua require(\"harpoon.mark\").add_file()<CR>", "Add to Harpoon"
+}
+local ui = require("harpoon.ui")
+vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
+vim.keymap.set("n", "<C-j>", function() ui.nav_file(1) end)
+vim.keymap.set("n", "<C-k>", function() ui.nav_file(2) end)
+vim.keymap.set("n", "<C-l>", function() ui.nav_file(3) end)
+vim.keymap.set("n", "<C-;>", function() ui.nav_file(4) end)
+
 lvim.keys.normal_mode["<leader>U"] = ":TestSuite<CR>"
 lvim.keys.normal_mode["<leader>u"] = ":TestFile<CR>"
+lvim.builtin.which_key.mappings["<leader>"] = {
+  "<C-^>", "Switch to Altername File"
+}
+lvim.keys.insert_mode["<C-b>"] = "<esc><C-^>"
 
 vim.api.nvim_set_keymap("n", "<m-d>", "<cmd>RustOpenExternalDocs<Cr>", { noremap = true, silent = true })
 
 lvim.lsp.buffer_mappings.normal_mode['<leader>sb'] = { ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
   "File Browser" }
+lvim.builtin.which_key.mappings["h"] = {
+  ui.toggle_quick_menu, "Harpoon"
+}
 
 lvim.builtin.which_key.mappings["C"] = {
   name = "Rust",
@@ -52,4 +69,7 @@ lvim.builtin.which_key.mappings["m"] = {
   p = {
     "<cmd>lua require('telescope.builtin').find_files({search_dirs={'src/services/mappers'}, prompt_title='Mappers', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>",
     "Mappers" },
+  f = {
+    "<cmd>lua require('telescope.builtin').find_files({search_dirs={'src/presenters/features'}, prompt_title='Features', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>",
+    "Features" },
 }

@@ -4,4 +4,5 @@ vim.opt.relativenumber = true
 vim.opt.cursorcolumn = true
 vim.opt.cmdheight = 1
 
+lvim.builtin.bufferline.active = false
 lvim.format_on_save = true
