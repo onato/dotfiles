@@ -93,36 +93,7 @@ require('lazy').setup({
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
-    config = function()
-      local lspconfig = require("lspconfig")
-      local util = require("lspconfig.util")
-      local cmp_nvim_lsp = require("cmp_nvim_lsp")
-      local capabilities = cmp_nvim_lsp.default_capabilities()
-      local opts = { noremap = true, silent = true }
-      local on_attach = function(_, bufnr)
-        opts.buffer = bufnr
-
-        opts.desc = "Show line diagnostics"
-        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
-
-        opts.desc = "Show documentation for what is under cursor"
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-      end
-
-      lspconfig["sourcekit"].setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-        cmd = {
-          "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
-        },
-        root_dir = function(filename, _)
-          return util.root_pattern("buildServer.json")(filename)
-              or util.root_pattern("*.xcodeproj", "*.xcworkspace")(filename)
-              or util.find_git_ancestor(filename)
-              or util.root_pattern("Package.swift")(filename)
-        end,
-      })
-    end,
+    config = require("custom/nvim-lspconfig-config")
   },
 
   {
@@ -139,60 +110,7 @@ require('lazy').setup({
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
     },
-    config = function()
-      local cmp = require("cmp")
-      local luasnip = require("luasnip")
-      local lspkind = require("lspkind")
-
-      -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
-      require("luasnip.loaders.from_vscode").lazy_load()
-
-      cmp.setup({
-        completion = {
-          completeopt = "menu,menuone,preview",
-        },
-        snippet = { -- configure how nvim-cmp interacts with snippet engine
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-          ["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-          ["<C-Space>"] = cmp.mapping.complete(),     -- show completion suggestions
-          ["<C-e>"] = cmp.mapping.abort(),            -- close completion window
-          ["<CR>"] = cmp.mapping.confirm({ select = false, behavior = cmp.ConfirmBehavior.Replace }),
-          ["<C-b>"] = cmp.mapping(function(fallback)
-            if luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ["<C-f>"] = cmp.mapping(function(fallback)
-            if luasnip.jumpable(1) then
-              luasnip.jump(1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-        }),
-        -- sources for autocompletion
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" }, -- snippets
-          { name = "buffer" },  -- text within current buffer
-          { name = "path" },    -- file system paths
-        }),
-        -- configure lspkind for vs-code like pictograms in completion menu
-        formatting = {
-          format = lspkind.cmp_format({
-            maxwidth = 50,
-            ellipsis_char = "...",
-          }),
-        },
-      })
-    end,
+    config = require("custom/nvim-cmp-config")
   },
 
   -- Useful plugin to show you pending keybinds.
@@ -381,6 +299,8 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 vim.cmd.colorscheme "catppuccin-mocha"
 
+require("custom/options")
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -396,6 +316,8 @@ vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous dia
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
+require("custom/keymap")
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -492,6 +414,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.keymap.set('n', '<leader>sm', ":Telescope harpoon marks<CR>", { desc = '[S]earch Harpoon [M]arks' })
 
 vim.keymap.set('n', '<leader>ta', ':TestSuite<cr>', { desc = 'Test [A]ll' })
+vim.keymap.set('n', '<leader>tc', ':!make coverage<cr>', { desc = 'Test [C]overage' })
 vim.keymap.set('n', '<leader>tf', ':TestFile<cr>', { desc = 'Test [F]ile' })
 vim.keymap.set('n', '<leader>te', ':TestEdit<cr>', { desc = 'Test [E]dit' })
 vim.keymap.set('n', '<leader>tn', ':TestNearest<cr>', { desc = 'Test [N]earest' })
@@ -773,6 +696,7 @@ cmp.setup {
   },
 }
 
+
 vim.cmd([[command! -nargs=0 GoToCommand :Telescope commands]])
 vim.cmd([[command! -nargs=0 GoToFile :Telescope smart_open]])
 vim.cmd([[command! -nargs=0 Grep :Telescope live_grep]])
@@ -785,6 +709,7 @@ vim.cmd([[
   noremap <silent> <c-l> :<C-U>TmuxNavigateRight<cr>
   noremap <silent> <c-\> :<C-U>TmuxNavigatePrevious<cr>
 ]])
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
