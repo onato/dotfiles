@@ -132,6 +132,7 @@ brew "fd" # User-friendly alternative to find
 brew "tldr"
 brew "zsh-syntax-highlighting"
 brew "zsh-autosuggestions"
+brew "zsh-vi-mode"
 brew "bash"
 brew "ispell"
 brew "tree"

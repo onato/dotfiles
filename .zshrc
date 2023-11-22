@@ -4,6 +4,9 @@ setopt autopushd # push the old directory onto the directory stack on cd.
 setopt append_history # Make sure windows don't overwrite each others history when exiting all at the same time.
 setopt share_history # Share history between windows.
 
+# No bell: Shut up Zsh
+unsetopt BEEP
+
 ANDROID_HOME=/Users/swilliams/Library/Android/sdk
 
 PATH=~/Documents/Code/sonar-scanner-4.8.0.2856-macosx/bin:${PATH}
@@ -57,13 +60,9 @@ source ~/.env
 
 eval "$(zoxide init zsh)"
 
-# source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # rbenv
 eval "$(/opt/homebrew/bin/rbenv init - zsh)"
-export PATH="/opt/homebrew/opt/postgresql@12/bin:$PATH"
+export PATH="$(brew --prefix)/opt/postgresql@12/bin:$PATH"
 
 # Save command history
 HISTFILE=~/.zsh_history
@@ -71,11 +70,5 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt HIST_EXPIRE_DUPS_FIRST
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  # source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
-
+source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 eval "$(starship init zsh)"
