@@ -150,6 +150,20 @@ require('lazy').setup({
           end)
           return '<Ignore>'
         end, { expr = true, buffer = bufnr, desc = 'Jump to previous hunk' })
+
+        vim.keymap.set('n', '<leader>hs', gs.stage_hunk, { desc = 'Stage Hunk' })
+        vim.keymap.set('n', '<leader>hr', gs.reset_hunk, { desc = 'Reset Hunk' })
+        vim.keymap.set('v', '<leader>hs', function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+          { desc = 'Stage Hunk' })
+        vim.keymap.set('v', '<leader>hr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
+          { desc = 'Reset Hunk' })
+        vim.keymap.set('n', '<leader>hS', gs.stage_buffer, { desc = 'Stage Buffer' })
+        vim.keymap.set('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'Undo Stage Hunk' })
+        vim.keymap.set('n', '<leader>hR', gs.reset_buffer, { desc = 'Reset Buffer' })
+        vim.keymap.set('n', '<leader>hp', gs.preview_hunk, { desc = 'Preview Hunk' })
+        vim.keymap.set('n', '<leader>hb', function() gs.blame_line { full = true } end, { desc = 'Blame Line' })
+        vim.keymap.set('n', '<leader>hd', gs.diffthis, { desc = 'Diff this' })
+        vim.keymap.set('n', '<leader>hD', function() gs.diffthis('~') end, { desc = 'Diff this ~' })
       end,
     },
   },
@@ -422,7 +436,11 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 vim.keymap.set('n', '<leader>sm', ":Telescope harpoon marks<CR>", { desc = '[S]earch Harpoon [M]arks' })
 vim.keymap.set('n', '<leader>gs', ":Telescope git_status<CR>", { desc = '[G]it [S]tatus' })
-vim.keymap.set('n', '<leader>gg', ":Git<CR>", { desc = '[[G]]it' })
+vim.keymap.set('n', '<leader>gg', ":vertical Git<CR>", { desc = '[[G]]it' })
+vim.keymap.set('n', '<leader>gb', ":Gitsigns toggle_current_line_blame<CR>", { desc = '[G]it Toggle Line [B]lame' })
+vim.keymap.set('n', '<leader>gB', ":Git blame<CR>", { desc = '[G]it [B]lame' })
+vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { desc = '[G]it [C]ommit' })
+vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = '[G]it [P]ush' })
 
 vim.keymap.set('n', '<leader>ta', ':TestSuite<cr>', { desc = 'Test [A]ll' })
 vim.keymap.set('n', '<leader>tc', ':!make coverage<cr>', { desc = 'Test [C]overage' })
@@ -450,7 +468,7 @@ vim.keymap.set('n', '<leader>bl', require('telescope.builtin').buffers, { desc =
 
 local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")
-vim.keymap.set("n", "<leader>ha", mark.add_file)
+vim.keymap.set("n", "<leader>+", mark.add_file, { desc = "Add to harpoon list" })
 vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu, { desc = "Harpoon" })
 vim.keymap.set("n", "<C-j>", function() ui.nav_file(1) end, { desc = "Harpoon 1" })
 vim.keymap.set("n", "<C-k>", function() ui.nav_file(2) end, { desc = "Harpoon 2" })
@@ -622,7 +640,7 @@ local servers = {
   -- pyright = {},
   rust_analyzer = {},
   -- tsserver = {},
-  html = { filetypes = { 'html', 'twig', 'hbs' } },
+  html = { filetypes = { 'html' } },
 
   lua_ls = {
     Lua = {
