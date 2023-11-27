@@ -1,0 +1,18 @@
+# Don't let ripgrep sow really long lines to my terminal, and show a preview.
+--max-columns=150
+--max-columns-preview
+
+# Always show hidden files
+--hidden
+
+# Add my 'zshrc' type
+--type-add=zshrc:*.zsh*
+--type-add=bashrc:*.sh*
+--type-add=automake:*makefile.in*
+
+# Using glob patterns to include/exclude files or folders
+--glob=!git/*
+--glob=!.git/*
+--glob=!github/*
+
+--ignore-case
