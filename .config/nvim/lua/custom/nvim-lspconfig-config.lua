@@ -7,11 +7,24 @@ return function()
   local on_attach = function(_, bufnr)
     opts.buffer = bufnr
 
+
+    local nmap = function(keys, func, desc)
+      if desc then
+        desc = 'LSP: ' .. desc
+      end
+
+      vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+    end
+
     opts.desc = "Show line diagnostics"
-    vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+    nmap("<leader>d", vim.diagnostic.open_float, opts)
 
     opts.desc = "Show documentation for what is under cursor"
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    nmap("K", vim.lsp.buf.hover, opts)
+    nmap("gi", vim.lsp.buf.implementation, { desc = "Implementation" })
+    nmap("gt", vim.lsp.buf.type_definition, { desc = "Type Definition" })
+    nmap("gd", vim.lsp.buf.definition, { desc = "Definition" })
+    nmap("gr", vim.lsp.buf.references, { desc = "References" })
   end
 
   lspconfig["sourcekit"].setup({

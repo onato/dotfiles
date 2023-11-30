@@ -3,21 +3,21 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     local conform = require("conform")
- 
+
     -- find .swiftformat config file in the working directory
     -- could be simplified if you keep it always in the root directory
     local swiftFormatConfigs =
-      vim.fn.systemlist({ "find", vim.fn.getcwd(), "-iname", ".swiftformat", "-not", "-path", "*/.*/*" })
- 
+        vim.fn.systemlist({ "find", vim.fn.getcwd(), "-iname", ".swiftformat", "-not", "-path", "*/.*/*" })
+
     table.sort(swiftFormatConfigs, function(a, b)
       return a ~= "" and #a < #b
     end)
- 
+
     local selectedSwiftFormatConfig
     if swiftFormatConfigs[1] then
       selectedSwiftFormatConfig = string.match(swiftFormatConfigs[1], "^%s*(.-)%s*$")
     end
- 
+
     conform.setup({
       formatters_by_ft = {
         swift = { "swiftformat_ext" },
@@ -50,14 +50,13 @@ return {
         },
       },
     })
- 
-    vim.keymap.set({ "n", "v" }, "<leader>mp", function()
+
+    vim.keymap.set({ "n", "v" }, "<leader>cf", function()
       conform.format({
         lsp_fallback = true,
         async = false,
         timeout_ms = 500,
       })
-    end, { desc = "Format file or range (in visual mode)" })
+    end, { desc = "[F]ormat file or range (in visual mode)" })
   end,
 }
-

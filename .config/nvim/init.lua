@@ -161,7 +161,6 @@ require('lazy').setup({
         vim.keymap.set('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'Undo Stage Hunk' })
         vim.keymap.set('n', '<leader>hR', gs.reset_buffer, { desc = 'Reset Buffer' })
         vim.keymap.set('n', '<leader>hp', gs.preview_hunk, { desc = 'Preview Hunk' })
-        vim.keymap.set('n', '<leader>hb', function() gs.blame_line { full = true } end, { desc = 'Blame Line' })
         vim.keymap.set('n', '<leader>hd', gs.diffthis, { desc = 'Diff this' })
         vim.keymap.set('n', '<leader>hD', function() gs.diffthis('~') end, { desc = 'Diff this ~' })
       end,
@@ -239,11 +238,9 @@ require('lazy').setup({
         hidden = true,
         find_command = {
           "fd",
-          ".",
           "--type",
           "file",
           "--hidden",
-          "--strip-cwd-prefix"
         }
       }
       opts.pickers = { find_files = find_files }
@@ -324,22 +321,6 @@ vim.o.termguicolors = true
 vim.cmd.colorscheme "catppuccin-mocha"
 
 require("custom/options")
-
--- [[ Basic Keymaps ]]
-
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
--- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 require("custom/keymap")
 
@@ -468,14 +449,14 @@ vim.keymap.set('n', '<leader>bl', require('telescope.builtin').buffers, { desc =
 
 local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")
-vim.keymap.set("n", "<leader>+", mark.add_file, { desc = "Add to harpoon list" })
+vim.keymap.set("n", "<leader>+", mark.add_file, { desc = "[+] to harpoon list" })
 vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu, { desc = "Harpoon" })
 vim.keymap.set("n", "<C-j>", function() ui.nav_file(1) end, { desc = "Harpoon 1" })
 vim.keymap.set("n", "<C-k>", function() ui.nav_file(2) end, { desc = "Harpoon 2" })
 vim.keymap.set("n", "<C-l>", function() ui.nav_file(3) end, { desc = "Harpoon 3" })
 vim.keymap.set("n", "<C-;>", function() ui.nav_file(4) end, { desc = "Harpoon 4" })
 
-vim.keymap.set('n', '<leader>mv',
+vim.keymap.set('n', '<leader>mm',
   "<cmd>lua require('telescope.builtin').find_files({search_dirs={'src/models'}, prompt_title='Models', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>",
   { desc = '[M]odels' })
 vim.keymap.set('n', '<leader>mr',
@@ -486,7 +467,7 @@ vim.keymap.set('n', '<leader>mu',
   { desc = '[U]se Cases' })
 vim.keymap.set('n', '<leader>mp',
   "<cmd>lua require('telescope.builtin').find_files({search_dirs={'src/services/mappers'}, prompt_title='Mappers', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>",
-  { desc = '[M]appers' })
+  { desc = 'Ma[p]pers' })
 vim.keymap.set('n', '<leader>mf',
   "<cmd>lua require('telescope.builtin').find_files({search_dirs={'src/presenters/features'}, prompt_title='Features', layout_strategy='horizontal',layout_config={height=0.6, width=0.6}})<cr>",
   { desc = '[F]eatuers' })
@@ -497,7 +478,7 @@ vim.keymap.set('n', '<leader>mf',
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'swift' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
@@ -550,10 +531,10 @@ vim.defer_fn(function()
       swap = {
         enable = true,
         swap_next = {
-          ['<leader>a'] = '@parameter.inner',
+          ['<leader>ra'] = '@parameter.inner',
         },
         swap_previous = {
-          ['<leader>A'] = '@parameter.inner',
+          ['<leader>rA'] = '@parameter.inner',
         },
       },
     },
@@ -577,7 +558,7 @@ local on_attach = function(_, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  nmap('<leader>rr', vim.lsp.buf.rename, '[R]ename')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
@@ -611,6 +592,7 @@ require('which-key').register {
   ['<leader>b'] = { name = '[B]uffers', _ = 'which_key_ignore' },
   ['<leader>d'] = { name = '[D]ebug', _ = 'which_key_ignore' },
   ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
+  ['<leader>h'] = { name = 'Gitsigns', _ = 'which_key_ignore' },
   ['<leader>m'] = { name = '[M]obile Core', _ = 'which_key_ignore' },
   ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
