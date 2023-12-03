@@ -18,3 +18,12 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open float
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Implementation" })
 vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { desc = "Type Definition" })
+
+vim.keymap.set('n', '[q', '<cmd>cprev<CR>zz', { desc = 'Go to previous item in the [q]uickfix list' })
+vim.keymap.set('n', ']q', '<cmd>cnext<CR>zz', { desc = 'Go to next item in the [q]uickfix list' })
+
+vim.keymap.set('n', '[l', '<cmd>lprev<CR>zz', { desc = 'Go to previous item in the location list' })
+vim.keymap.set('n', ']l', '<cmd>lnext<CR>zz', { desc = 'Go to next item in the location list' })
+
+-- LLM Test/Code Generation
+vim.keymap.set({ 'n', 'v' }, '<leader>cg', ':Gen<CR>', { desc = "[C]ode [G]enerate" })

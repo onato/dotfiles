@@ -4,6 +4,11 @@ setopt autopushd # push the old directory onto the directory stack on cd.
 setopt append_history # Make sure windows don't overwrite each others history when exiting all at the same time.
 setopt share_history # Share history between windows.
 
+# Get color support for 'less'
+export LESS="--RAW-CONTROL-CHARS"
+# Use colors for less, man, etc.
+[[ -f ~/.LESS_TERMCAP ]] && . ~/.LESS_TERMCAP
+
 # No bell: Shut up Zsh
 unsetopt BEEP
 
@@ -25,13 +30,11 @@ PATH=~/.gvm/bin:${PATH}
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 bindkey -v
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # fzf
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f --color=never --hidden'
 export FZF_DEFAULT_OPTS='--no-height --color=bg+:#343d46,gutter:-1,pointer:#ff3c3c,info:#0dbc79,hl:#0dbc79,hl+:#23d18b'
 
@@ -72,3 +75,7 @@ setopt HIST_EXPIRE_DUPS_FIRST
 
 source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 eval "$(starship init zsh)"
+
+source ~/bin/antigen.zsh
+antigen bundle ael-code/zsh-colored-man-pages
+

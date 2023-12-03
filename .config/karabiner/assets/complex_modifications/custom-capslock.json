@@ -22,10 +22,7 @@
                     ],
                     "to_if_alone": [
                         {
-                            "key_code": "escape",
-                            "modifiers": [
-                                "right_shift"
-                            ]
+                            "key_code": "escape"
                         }
                     ],
                     "conditions": [

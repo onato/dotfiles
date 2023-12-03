@@ -136,6 +136,7 @@ brew "zsh-vi-mode"
 brew "bash"
 brew "ispell"
 brew "tree"
+brew "parallel"
 
 # Editors
 brew "nvim"
