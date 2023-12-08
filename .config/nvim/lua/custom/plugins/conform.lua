@@ -31,7 +31,7 @@ return {
           command = "swiftformat",
           args = {
             "--config",
-            selectedSwiftFormatConfig or "~/.config/nvim/.swiftformat", -- update fallback path if needed
+            selectedSwiftFormatConfig or "~/.swiftformat", -- update fallback path if needed
             "--stdinpath",
             "$FILENAME",
           },

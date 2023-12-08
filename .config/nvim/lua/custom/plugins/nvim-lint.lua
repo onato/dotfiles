@@ -35,7 +35,7 @@ return {
         "--force-exclude",
         "--use-alternative-excluding",
         "--config",
-        selectedSwiftlintConfig or os.getenv("HOME") .. "/.config/nvim/.swiftlint.yml", -- change path if needed
+        selectedSwiftlintConfig or os.getenv("HOME") .. "/.swiftlint.yml", -- change path if needed
       },
       stream = "stdout",
       ignore_exitcode = true,
