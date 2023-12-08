@@ -2,7 +2,7 @@ return {
   "klen/nvim-test",
   config = function()
     require('nvim-test').setup {
-      term = "toggleterm",
+      term = "terminal",
       termOpts = {
         width = 99,
       }
