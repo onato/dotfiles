@@ -1,0 +1,3 @@
+return {
+  "CoderCookE/vim-chatgpt"
+}
