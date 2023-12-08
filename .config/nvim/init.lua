@@ -216,44 +216,6 @@ require('lazy').setup({
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 
--- Set highlight on search
-vim.o.hlsearch = false
-
--- Make line numbers default
-vim.wo.number = true
-
--- Enable mouse mode
-vim.o.mouse = 'a'
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
-
--- Enable break indent
-vim.o.breakindent = true
-
--- Save undo history
-vim.o.undofile = true
-
--- Case-insensitive searching UNLESS \C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
--- Keep signcolumn on by default
-vim.wo.signcolumn = 'yes'
-
--- Decrease update time
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
-
--- NOTE: You should make sure your terminal supports this
-vim.o.termguicolors = true
-vim.cmd.colorscheme "catppuccin-mocha"
-
 require("custom/options")
 
 require("custom/keymap")
@@ -366,6 +328,7 @@ vim.keymap.set('n', '<leader>tt', ':TestLast<cr>', { desc = 'Test Las[t]' })
 vim.keymap.set('n', '<leader>tv', ':TestVisit<cr>', { desc = 'Test [V]isit' })
 vim.keymap.set('n', '<leader>u', ':TestFile<cr>', { desc = 'Test Current File' })
 
+
 vim.keymap.set("n", "<leader>xl", "<cmd>XcodebuildToggleLogs<cr>", { desc = "Toggle Xcodebuild Logs" })
 vim.keymap.set("n", "<leader>xb", "<cmd>XcodebuildBuild<cr>", { desc = "Build Project" })
 vim.keymap.set("n", "<leader>xr", "<cmd>XcodebuildBuildRun<cr>", { desc = "Build & Run Project" })
@@ -384,7 +347,7 @@ vim.keymap.set('n', '<leader>bl', require('telescope.builtin').buffers, { desc =
 local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")
 vim.keymap.set("n", "<leader>+", mark.add_file, { desc = "[+] to harpoon list" })
-vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu, { desc = "Harpoon" })
+vim.keymap.set("n", "<leader>se", ui.toggle_quick_menu, { desc = "Harpoon" })
 vim.keymap.set("n", "<C-j>", function() ui.nav_file(1) end, { desc = "Harpoon 1" })
 vim.keymap.set("n", "<C-k>", function() ui.nav_file(2) end, { desc = "Harpoon 2" })
 vim.keymap.set("n", "<C-l>", function() ui.nav_file(3) end, { desc = "Harpoon 3" })
