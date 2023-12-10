@@ -30,14 +30,14 @@ vim.keymap.set('n', '<leader>gB', ":Git blame<CR>", { desc = '[G]it [B]lame' })
 vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { desc = '[G]it [C]ommit' })
 vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = '[G]it [P]ush' })
 
-vim.keymap.set('n', '<leader>ta', ':TestSuite<cr>', { desc = 'Test [A]ll' })
+vim.keymap.set('n', '<leader>ta', ':TestSuite<cr><C-w>w', { desc = 'Test [A]ll' })
 vim.keymap.set('n', '<leader>tc', ':!make coverage<cr>', { desc = 'Test [C]overage' })
 vim.keymap.set('n', '<leader>tf', ':TestFile<cr>', { desc = 'Test [F]ile' })
 vim.keymap.set('n', '<leader>te', ':TestEdit<cr>', { desc = 'Test [E]dit' })
 vim.keymap.set('n', '<leader>tn', ':TestNearest<cr>', { desc = 'Test [N]earest' })
 vim.keymap.set('n', '<leader>tt', ':TestLast<cr>', { desc = 'Test Las[t]' })
 vim.keymap.set('n', '<leader>tv', ':TestVisit<cr>', { desc = 'Test [V]isit' })
-vim.keymap.set('n', '<leader>u', ':TestFile<cr>', { desc = 'Test Current File' })
+vim.keymap.set('n', '<leader>u', ':TestFile<cr><C-w>w', { desc = 'Test Current File' })
 
 
 vim.keymap.set("n", "<leader>xl", "<cmd>XcodebuildToggleLogs<cr>", { desc = "Toggle Xcodebuild Logs" })
