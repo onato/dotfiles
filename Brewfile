@@ -39,7 +39,6 @@ cask "alacritty" # terminal
 cask "wezterm" # terminal
 cask "kitty" # terminal
 cask "warp" # terminal
-brew "nushell" # shell
 brew "starship" # shell prompt
 brew "git"
 brew "bfg" # tool for cleaning up git repos
@@ -55,6 +54,7 @@ brew "yazi"
 brew "git-delta"
 brew "shellcheck"
 brew "jq"
+brew "yq"
 brew "jqp"
 brew "cmake"
 brew "radare2" # reverse engineering
@@ -91,6 +91,7 @@ cask "rstudio"
 brew "gdal" # required to the DOC R Work
 brew "udunits" # required to the DOC R Work
 brew "fribidi" # required to the DOC R Work
+cask "jupyterlab"
 brew "php"
 
 # Databases
@@ -137,6 +138,7 @@ brew "bash"
 brew "ispell"
 brew "tree"
 brew "parallel"
+brew "glow"
 
 # Editors
 brew "nvim"

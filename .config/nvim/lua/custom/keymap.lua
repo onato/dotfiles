@@ -30,15 +30,16 @@ vim.keymap.set('n', '<leader>gB', ":Git blame<CR>", { desc = '[G]it [B]lame' })
 vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { desc = '[G]it [C]ommit' })
 vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = '[G]it [P]ush' })
 
-vim.keymap.set('n', '<leader>ta', ':TestSuite<cr><C-w>w', { desc = 'Test [A]ll' })
-vim.keymap.set('n', '<leader>tc', ':!make coverage<cr>', { desc = 'Test [C]overage' })
+vim.keymap.set('n', '<leader>ta', ':!tmux-runner "cargo test"<CR><C-L>', { desc = 'Cargo Test' })
+-- vim.keymap.set('n', '<leader>ta', ':TestSuite<cr><C-w>w', { desc = 'Test [A]ll' })
+vim.keymap.set('n', '<leader>tc', ':!tmux-runner "make coverage"<CR><C-L>', { desc = 'Test [C]overage' })
+-- vim.keymap.set('n', '<leader>tc', ':!make coverage<cr>', { desc = 'Test [C]overage' })
 vim.keymap.set('n', '<leader>tf', ':TestFile<cr>', { desc = 'Test [F]ile' })
 vim.keymap.set('n', '<leader>te', ':TestEdit<cr>', { desc = 'Test [E]dit' })
 vim.keymap.set('n', '<leader>tn', ':TestNearest<cr>', { desc = 'Test [N]earest' })
 vim.keymap.set('n', '<leader>tt', ':TestLast<cr>', { desc = 'Test Las[t]' })
 vim.keymap.set('n', '<leader>tv', ':TestVisit<cr>', { desc = 'Test [V]isit' })
 vim.keymap.set('n', '<leader>u', ':TestFile<cr><C-w>w', { desc = 'Test Current File' })
-
 
 vim.keymap.set("n", "<leader>xl", "<cmd>XcodebuildToggleLogs<cr>", { desc = "Toggle Xcodebuild Logs" })
 vim.keymap.set("n", "<leader>xb", "<cmd>XcodebuildBuild<cr>", { desc = "Build Project" })
@@ -55,6 +56,8 @@ vim.keymap.set('n', '<leader>bb', ':bprev<cr>', { desc = '[B]ack' })
 vim.keymap.set('n', '<leader>bn', ':bnext<cr>', { desc = '[N]ext' })
 vim.keymap.set('n', '<leader>bl', require('telescope.builtin').buffers, { desc = '[L]ist buffers' })
 vim.keymap.set('n', '<leader>bd', ':bdelete<cr>', { desc = '[D]elete' })
+
+vim.keymap.set('n', '<leader>z', ':!tmux resize-pane -Z<CR><C-L>', { desc = '[Z]oom Tmux Pane' })
 
 local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")

@@ -24,7 +24,6 @@ vim.o.termguicolors = true             -- NOTE: You should make sure your termin
 
 vim.cmd.colorscheme "catppuccin-mocha"
 
-
 -- NetRW
 -- <CR>/v/t to open in a split
 -- :help netrw-browse-maps to view key mappings
@@ -34,3 +33,8 @@ vim.g.netrw_liststyle = 3
 vim.g.netrw_altv = 1                                                                    -- Open with right splitting
 vim.g.netrw_liststyle = 3                                                               -- Tree-style view
 vim.g.netrw_list_hide = (vim.fn["netrw_gitignore#Hide"]()) .. [[,\(^\|\s\s\)\zs\.\S\+]] -- use .gitignore
+
+vim.g.VimuxOrientation = "h"
+
+-- Window Status Bar
+vim.o.winbar = "%=%m%f"

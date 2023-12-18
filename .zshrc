@@ -4,10 +4,6 @@ setopt autopushd # push the old directory onto the directory stack on cd.
 setopt append_history # Make sure windows don't overwrite each others history when exiting all at the same time.
 setopt share_history # Share history between windows.
 
-eval $(op signin)
-eval "$(op completion zsh)"; compdef _op op
-export OPENAI_API_KEY="$(op item get "OpenAI API Key" --fields credential)"
-
 # Get color support for 'less'
 export LESS="--RAW-CONTROL-CHARS"
 # Use colors for less, man, etc.
@@ -33,6 +29,9 @@ PATH=~/.gvm/bin:${PATH}
 # case insensitive completion
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+# eval $(op signin)
+# eval "$(op completion zsh)"; compdef _op op
+# export OPENAI_API_KEY="$(op item get "OpenAI API Key" --fields credential)"
 
 bindkey -v
 
@@ -82,4 +81,5 @@ eval "$(starship init zsh)"
 
 source ~/bin/antigen.zsh
 antigen bundle ael-code/zsh-colored-man-pages
-
+# Tell Antigen that you're done.
+antigen apply

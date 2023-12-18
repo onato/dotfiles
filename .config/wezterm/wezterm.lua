@@ -33,6 +33,7 @@ return {
                 k.cmd_key("p", k.multiple_actions(":GoToFile")),
                 k.cmd_key("P", k.multiple_actions(":GoToCommand")),
                 k.cmd_key("q", k.multiple_actions(":qa!")),
+                k.cmd_key("w", k.multiple_actions(":bd")),
 
                 k.cmd_to_tmux_prefix("0", "1"),
                 k.cmd_to_tmux_prefix("1", "1"),
@@ -58,7 +59,7 @@ return {
                 k.cmd_to_tmux_prefix("o", "u"),
                 k.cmd_to_tmux_prefix("T", "!"),
                 k.cmd_to_tmux_prefix("t", "c"),
-                k.cmd_to_tmux_prefix("w", "x"),
+                -- k.cmd_to_tmux_prefix("w", "x"),
                 k.cmd_to_tmux_prefix("z", "z"),
 
                 k.cmd_key(

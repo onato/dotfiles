@@ -1,4 +1,4 @@
 return {
-	"zbirenbaum/copilot.lua",
+	'tpope/vim-fugitive',
 	event = "VeryLazy"
 }

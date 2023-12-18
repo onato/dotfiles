@@ -1,5 +1,6 @@
 return {
-  "catppuccin/nvim",
-  name = "catppuccin",
-  priority = 1000
+	"catppuccin/nvim",
+	event = "VeryLazy",
+	name = "catppuccin",
+	priority = 1000
 }
