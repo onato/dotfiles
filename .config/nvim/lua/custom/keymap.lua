@@ -111,7 +111,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader>cg', ':Gen<CR>', { desc = "[C]ode [G]enera
 
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
-vim.keymap.set('n', '<leader>e', ':Explore<cr>', { desc = 'Explore File System' })
+vim.keymap.set('n', '<leader>e', '<cmd>Yazi<CR>', { desc = 'Toggle Yazi' })
 
 require('which-key').register {
   ['<leader>cb'] = { name = '[B]oilerplate', _ = 'which_key_ignore' },

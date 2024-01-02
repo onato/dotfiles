@@ -26,6 +26,16 @@ PATH=~/.gvm/bin:${PATH}
 
 . "$HOME/.cargo/env"
 
+# aliases
+if [ $(command -v nvim) ]; then
+  export EDITOR=$(which nvim)
+  alias vim=$EDITOR
+  alias v=$EDITOR
+fi
+
+export SUDO_EDITOR=$EDITOR
+export VISUAL=$EDITOR
+
 # case insensitive completion
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -34,6 +44,10 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 # export OPENAI_API_KEY="$(op item get "OpenAI API Key" --fields credential)"
 
 bindkey -v
+source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+function zvm_after_init() {
+ zvm_bindkey viins '^R' fzf-history-widget
+}
 
 # fzf
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -47,17 +61,6 @@ export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :50 {}'"
 export FZF_ALT_C_COMMAND='fd --type d . --color=never --hidden'
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 
-# aliases
-alias v="vim"
-
-if [ $(command -v nvim) ]; then
-  export EDITOR=$(which nvim)
-  alias vim=$EDITOR
-  alias v=$EDITOR
-fi
-
-export SUDO_EDITOR=$EDITOR
-export VISUAL=$EDITOR
 
 source ~/.dotfiles/zsh/shortcuts.zsh
 source ~/.dotfiles/zsh/aliases.zsh
@@ -76,7 +79,6 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt HIST_EXPIRE_DUPS_FIRST
 
-source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 eval "$(starship init zsh)"
 
 source ~/bin/antigen.zsh

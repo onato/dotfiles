@@ -23,7 +23,7 @@ brew "mas" # Mac App Store command-line interface
 brew "gh"
 cask "carbon-copy-cloner"
 cask "1password"
-cask "1password-cli"
+brew "pass"
 brew "go-jira"
 
 # Swift related tools
@@ -67,7 +67,6 @@ cask "docker"
 brew "act" # Run your GitHub Actions locally
 brew "tmux" # terminal multiplexer
 brew "gitmux" # git info in the tmux status bar
-brew "zellij" # terminal multiplexer
 brew "stow" # Install files from .dotfiles
 cask "syntax-highlight" # Quicklook extension for source files
 brew "zoxide"
@@ -92,6 +91,7 @@ brew "gdal" # required to the DOC R Work
 brew "udunits" # required to the DOC R Work
 brew "fribidi" # required to the DOC R Work
 cask "jupyterlab"
+brew "jupyterlab"
 brew "php"
 
 # Databases
@@ -139,6 +139,9 @@ brew "ispell"
 brew "tree"
 brew "parallel"
 brew "glow"
+
+tap "cutzenfriend/homebrew-cmdg"
+brew "cmdg" # gmail client
 
 # Editors
 brew "nvim"

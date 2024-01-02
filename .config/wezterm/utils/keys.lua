@@ -33,4 +33,3 @@ M.cmd_to_tmux_prefix = function(key, tmux_key)
 end
 
 return M
-

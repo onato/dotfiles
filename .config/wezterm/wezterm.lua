@@ -1,7 +1,19 @@
 local k = require("utils/keys")
-
 local wezterm = require 'wezterm';
 local act = wezterm.action
+
+wezterm.on("cmd_w_keybinding", function(window, pane)
+        local success, foreground_process_name, stderr = wezterm.run_child_process { '/Users/swilliams/bin/tmux-title' }
+
+        if foreground_process_name:match("vim") then
+                -- Send the ":bd" command to Vim
+                window:perform_action(wezterm.action { SendString = ":bd\n" }, pane)
+        else
+                -- Send the tmux prefix (e.g., Ctrl-B) followed by 'x'
+                window:perform_action(wezterm.action { SendKey = { key = "a", mods = "CTRL" } }, pane)
+                window:perform_action(wezterm.action { SendString = "x" }, pane)
+        end
+end)
 
 return {
 
@@ -33,7 +45,8 @@ return {
                 k.cmd_key("p", k.multiple_actions(":GoToFile")),
                 k.cmd_key("P", k.multiple_actions(":GoToCommand")),
                 k.cmd_key("q", k.multiple_actions(":qa!")),
-                k.cmd_key("w", k.multiple_actions(":bd")),
+                -- k.cmd_key("w", k.multiple_actions(":bd")),
+                { key = "w", mods = "CMD", action = wezterm.action { EmitEvent = "cmd_w_keybinding" } },
 
                 k.cmd_to_tmux_prefix("0", "1"),
                 k.cmd_to_tmux_prefix("1", "1"),
