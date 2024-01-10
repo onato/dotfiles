@@ -35,6 +35,7 @@ fi
 
 export SUDO_EDITOR=$EDITOR
 export VISUAL=$EDITOR
+export PAGER=less
 
 # case insensitive completion
 autoload -Uz compinit && compinit

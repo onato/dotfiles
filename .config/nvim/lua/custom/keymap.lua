@@ -15,6 +15,11 @@ vim.keymap.set('n', '<leader>/', function()
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
+vim.keymap.set('n', '<leader>ll', ':ChatGPT<CR>', { desc = '[L]LM ChatGPT' })
+vim.keymap.set('n', '<leader>la', ':ChatGPTActAs<CR>', { desc = '[L]LM ChatGPT[A]ctAs' })
+vim.keymap.set('n', '<leader>lc', ':ChatGPTCompleteCode<CR>', { desc = '[L]LM ChatGPT[C]opleteCode' })
+vim.keymap.set('n', '<leader>lr', ':ChatGPTRun<CR>', { desc = '[L]LM ChatGPT[R]un' })
+
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
