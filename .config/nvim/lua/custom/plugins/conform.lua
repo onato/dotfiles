@@ -35,16 +35,16 @@ return {
             "--stdinpath",
             "$FILENAME",
           },
-          range_args = function(ctx)
+          range_args = function(self, ctx)
             return {
               "--config",
-              selectedSwiftFormatConfig or "~/.config/nvim/.swiftformat", -- update fallback path if needed
+              selectedSwiftFormatConfig or "~/.swiftformat", -- update fallback path if needed
               "--linerange",
               ctx.range.start[1] .. "," .. ctx.range["end"][1],
             }
           end,
           stdin = true,
-          condition = function(ctx)
+          condition = function(self, ctx)
             return vim.fs.basename(ctx.filename) ~= "README.md"
           end,
         },
