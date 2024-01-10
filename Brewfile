@@ -1,6 +1,4 @@
-tap "homebrew/core"
 tap "homebrew/bundle"
-tap "homebrew/cask" 
 tap "a7ex/homebrew-formulae" # for xcresultparser
 tap "noahgorstein/tap"
 tap "arl/arl"
@@ -63,6 +61,10 @@ cask "thor"
 cask "charles"
 cask "postman"
 #brew "newman" # postman test runner
+
+tap "tufin/homebrew-tufin" # openapi diff
+brew "oasdiff" # openapi diff
+
 cask "docker" 
 brew "act" # Run your GitHub Actions locally
 brew "tmux" # terminal multiplexer
@@ -116,6 +118,7 @@ brew "nodenv/nodenv/nodenv-default-packages"
 cask "firefox"
 cask "google-chrome"
 cask "tor-browser"
+brew "lynx"
 
 # Command Line Utils
 brew "ImageMagick"
