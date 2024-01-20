@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -euo pipefail
+IFS=$'\n\t'
+
+/opt/homebrew/bin/tmux display-message -p '#T'
+
+

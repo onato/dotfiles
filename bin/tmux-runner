@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 1 ]]; then
+    command=$1
+fi
+
+if [[ -z $command ]]; then
+    exit 0
+fi
+
+PANE_NAME="TMUX Runner"
+
+# Check if tmux is running
+if ! tmux info &> /dev/null; then
+    echo "tmux is not running. Please start tmux first."
+    exit 1
+fi
+
+pane_exists() {
+    tmux list-panes -F '#{pane_title}' | grep "$PANE_NAME" &> /dev/null;
+}
+
+create_pane() {
+    tmux split-window -h -p 33
+    # tmux select-pane -T "$PANE_NAME"
+}
+
+# Check if the pane exists, and create it if not
+if ! pane_exists; then
+    create_pane
+fi
+
+PANE_INDEX=$(tmux list-panes -F '#{pane_index} #{pane_title}' | grep "$PANE_NAME" | awk '{print $1}')
+tmux select-pane -t "$PANE_INDEX"
+tmux send-keys "clear; $command" C-m
+tmux select-pane -l

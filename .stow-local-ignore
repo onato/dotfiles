@@ -2,4 +2,6 @@
 Brewfile.*
 zsh
 .DS_Store
+scripts
+snippets
 
