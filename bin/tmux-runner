@@ -22,7 +22,7 @@ pane_exists() {
 
 create_pane() {
     tmux split-window -h -p 33
-    # tmux select-pane -T "$PANE_NAME"
+    tmux select-pane -T "$PANE_NAME"
 }
 
 # Check if the pane exists, and create it if not

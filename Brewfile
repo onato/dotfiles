@@ -28,6 +28,7 @@ brew "go-jira"
 brew "cocoapods"
 brew "swiftformat"
 brew "swiftlint"
+cask "peripheryapp/periphery/periphery"
 brew "swiftgen"
 brew "xcbeautify"
 brew "xcresultparser"
@@ -39,6 +40,7 @@ cask "kitty" # terminal
 cask "warp" # terminal
 brew "starship" # shell prompt
 brew "git"
+brew "pre-commit" # run scripts before git commiting
 brew "bfg" # tool for cleaning up git repos
 cask "github"
 brew "lazygit"
@@ -143,6 +145,9 @@ brew "tree"
 brew "parallel"
 brew "glow"
 
+# Mobile Security Tools
+brew "libimobiledevice"
+
 tap "cutzenfriend/homebrew-cmdg"
 brew "cmdg" # gmail client
 
@@ -154,10 +159,12 @@ cask "sf-symbols"
 
 # App Store Apps
 mas "Xcode", id: 497799835
+mas "InjectionIII", id: 1380446739 # code injection for live updates
 cask "swiftformat-for-xcode"
-mas "WireGuard", id: 1451685025
+# mas "WireGuard", id: 1451685025
 mas "Speedtest by Ookla", id: 1153157709
 cask "vlc"
 brew "youtube-dl"
 cask "obsidian"
+cask "geekbench"
 

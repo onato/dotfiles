@@ -36,6 +36,7 @@ vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { desc = '[G]it [C]ommit' }
 vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = '[G]it [P]ush' })
 
 vim.keymap.set('n', '<leader>ta', ':!tmux-runner "cargo test"<CR><C-L>', { desc = 'Cargo Test' })
+vim.keymap.set('n', '<leader>ts', ':!tmux-runner "swift test | xcpretty"<CR><C-L>', { desc = 'Swift Test' })
 -- vim.keymap.set('n', '<leader>ta', ':TestSuite<cr><C-w>w', { desc = 'Test [A]ll' })
 vim.keymap.set('n', '<leader>tc', ':!tmux-runner "make coverage"<CR><C-L>', { desc = 'Test [C]overage' })
 -- vim.keymap.set('n', '<leader>tc', ':!make coverage<cr>', { desc = 'Test [C]overage' })

@@ -5,7 +5,10 @@ return {
       term = "terminal",
       termOpts = {
         width = 99,
-      }
+      },
+      runners = {
+        rust = "nvim-test.runners.cargo-test",
+      },
     }
     require('nvim-test.runners.cargo-test'):setup {
       command = "cargo",
