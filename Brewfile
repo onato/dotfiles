@@ -51,6 +51,8 @@ brew "yazi"
   brew "unar"
   brew "poppler"
 
+brew "entr" # Run arbitrary commands when files change
+
 brew "git-delta"
 brew "shellcheck"
 brew "jq"
@@ -94,8 +96,8 @@ cask "rstudio"
 brew "gdal" # required to the DOC R Work
 brew "udunits" # required to the DOC R Work
 brew "fribidi" # required to the DOC R Work
-cask "jupyterlab"
-brew "jupyterlab"
+# cask "jupyterlab"
+# brew "jupyterlab"
 brew "php"
 
 # Databases
@@ -167,4 +169,4 @@ cask "vlc"
 brew "youtube-dl"
 cask "obsidian"
 cask "geekbench"
-
+cask "numi"

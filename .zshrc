@@ -1,4 +1,4 @@
-CDPATH=~/Documents/Code/
+CDPATH=~/Documents/Code/:~/Documents/IntellumCode/
 setopt auto_cd # allow typing just the name of the directory to change into it.
 setopt autopushd # push the old directory onto the directory stack on cd.
 setopt append_history # Make sure windows don't overwrite each others history when exiting all at the same time.
@@ -73,6 +73,11 @@ eval "$(zoxide init zsh)"
 # rbenv
 eval "$(/opt/homebrew/bin/rbenv init - zsh)"
 export PATH="$(brew --prefix)/opt/postgresql@12/bin:$PATH"
+
+#pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 # Save command history
 HISTFILE=~/.zsh_history

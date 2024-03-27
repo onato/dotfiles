@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+# Watch a file for changes and run a command when it changes.
+# Usage: watch <file> <command>
+# Example: watch 'Source/Models' 'sourcery'
+
+find "$1" | entr -d "$2"
+ 

@@ -1,0 +1,41 @@
+#!/bin/bash
+BASE_URL="https://raw.githubusercontent.com/github/gitignore/master"
+
+if [ -z "$1" ];
+  then
+    printf "\n"
+    echo "Gitignore Downloader"
+    echo "======================================="
+    echo "Thanks to github/gitignore contributors"
+    printf "\n"
+    echo "Usage:"
+    echo "    gitignore -<lang_abbr> or --<lang_name> to download .gitignore"
+    echo "    specific to a language of your choice"
+    printf "\n"
+    echo "    Example: gitignore -py # downloads .gitignore for Python into a current directory"
+  else
+    case "$1" in
+      -py | --python)
+        printf "\n"
+        echo "Python"
+        echo "$BASE_URL/Python.gitignore"
+        curl --url "$BASE_URL/Python.gitignore" >> .gitignore
+      ;;
+
+      -js | --nodejs)
+        printf "\n"
+        echo "Nodejs"
+      ;;
+
+      -swift)
+        printf "\n"
+        echo "$BASE_URL/Swift.gitignore"
+        curl --url "$BASE_URL/Swift.gitignore" >> .gitignore
+      ;;
+      
+      *)
+        printf "\n"
+        echo "Error: program doesn't know the language you've provided"
+      ;;
+    esac
+fi
