@@ -40,6 +40,7 @@ cask "kitty" # terminal
 cask "warp" # terminal
 brew "starship" # shell prompt
 brew "git"
+brew "git-lfs" # Git extension for versioning large files
 brew "pre-commit" # run scripts before git commiting
 brew "bfg" # tool for cleaning up git repos
 cask "github"
@@ -78,8 +79,11 @@ cask "syntax-highlight" # Quicklook extension for source files
 brew "zoxide"
 
 # Programming Languages
-brew "pyenv"
-brew "pipenv"
+
+# Use conda instead
+# brew "pyenv"
+# brew "pipenv"
+
 brew "rbenv"
 brew "rtx" # version manager for nvm, nodenv, pyenv, etc.
 # brew "rust"
