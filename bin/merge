@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Query the "In Progress" issue from Jira
+# Replace 'status = "In Progress"' with the actual JQL that matches your project's configuration
+ISSUE_KEY=$(jira issues list --plain -q'status = "In Progress"' --plain | awk -F '\t' 'NR > 1 {print $2}' | head -n 1)
+ISSUE_DESC=$(git log -1 --pretty=format:"%s")
+if [ -z "$ISSUE_KEY" ]; then
+    echo "No 'In Progress' issue found."
+    exit 1
+fi
+echo "Found issue: $ISSUE_KEY"
+
+# Create a new branch for this issue
+# Modify the branch name format as needed
+BRANCH_NAME="feature/$ISSUE_KEY-$(uuidgen)"
+git checkout -b "$BRANCH_NAME"
+
+# Push the branch to remote
+git push -u origin "$BRANCH_NAME"
+
+# Create a GitHub pull request
+# Adjust title and body as necessary
+PR_URL=$(gh pr create --title "Issue $ISSUE_KEY" --body "https://intellum.atlassian.net/browse/$ISSUE_KEY" | tail -n 1)
+
+echo "Pull request created: $PR_URL"
+
+# Step 6: Merge the pull request
+# This step requires that branch protection rules allow for automatic merging without review
+# You might need to adjust or remove this step based on your project's requirements
+gh pr merge "$BRANCH_NAME" --squash --subject "$ISSUE_DESC #$ISSUE_KEY" --delete-branch
+
+# Step 7: Switch back to the previous branch (assuming 'main')
+git checkout main
+
+# Step 8: Pull the latest changes
+git pull origin main
+
+echo "Done."
+

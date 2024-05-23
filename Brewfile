@@ -85,7 +85,7 @@ brew "zoxide"
 # brew "pipenv"
 
 brew "rbenv"
-brew "rtx" # version manager for nvm, nodenv, pyenv, etc.
+brew "mise" # version manager for nvm, nodenv, pyenv, etc.
 # brew "rust"
 # brew "cargo-nextest" # don't install this because it installs rust
 brew "rustup-init"
@@ -103,6 +103,7 @@ brew "fribidi" # required to the DOC R Work
 # cask "jupyterlab"
 # brew "jupyterlab"
 brew "php"
+brew "openjdk@17"
 
 # Databases
 brew "sqlite"
@@ -150,6 +151,7 @@ brew "ispell"
 brew "tree"
 brew "parallel"
 brew "glow"
+brew "firebase-cli"
 
 # Mobile Security Tools
 brew "libimobiledevice"
@@ -165,6 +167,7 @@ cask "sf-symbols"
 
 # App Store Apps
 mas "Xcode", id: 497799835
+cask "copilot-for-xcode"
 mas "InjectionIII", id: 1380446739 # code injection for live updates
 cask "swiftformat-for-xcode"
 # mas "WireGuard", id: 1451685025

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Check if a branch name was provided
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <branch-name>"
+    exit 1
+fi
+
+BRANCH_NAME=$1
+
+# Ensure we are not trying to delete the main or master branch
+if [ "$BRANCH_NAME" = "main" ] || [ "$BRANCH_NAME" = "master" ]; then
+    echo "Refusing to delete the branch '$BRANCH_NAME'."
+    exit 1
+fi
+
+# Delete the local branch
+git branch -d "$BRANCH_NAME"
+if [ $? -ne 0 ]; then
+    echo "Failed to delete local branch '$BRANCH_NAME'. Trying with force delete."
+    git branch -D "$BRANCH_NAME"
+fi
+
+# Delete the remote branch on GitHub
+git push origin --delete "$BRANCH_NAME"
+if [ $? -eq 0 ]; then
+    echo "Successfully deleted both local and remote branches named '$BRANCH_NAME'."
+else
+    echo "Failed to delete the remote branch '$BRANCH_NAME'."
+fi
+

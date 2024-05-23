@@ -13,6 +13,7 @@ export LESS="--RAW-CONTROL-CHARS"
 unsetopt BEEP
 
 ANDROID_HOME=/Users/swilliams/Library/Android/sdk
+JAVA_HOME=$HOMEBREW_PREFIX/opt/openjdk@17
 
 PATH=~/Documents/Code/sonar-scanner-4.8.0.2856-macosx/bin:${PATH}
 PATH=~/.emacs.d/bin:${PATH}
@@ -20,11 +21,13 @@ PATH=~/go/bin:${PATH}
 PATH=~/bin:${PATH}
 PATH=~/.local/bin:${PATH}
 PATH=~/.nodenv/shims:${PATH}
+PATH=$JAVA_HOME/bin/:$PATH
 
 PATH=~/.gvm/bin:${PATH}
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
 
 . "$HOME/.cargo/env"
+
 
 # aliases
 if [ $(command -v nvim) ]; then
