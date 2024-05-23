@@ -39,6 +39,7 @@ fi
 export SUDO_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 export PAGER=less
+export RIPGREP_CONFIG_PATH=~/.ripgreprc
 
 # case insensitive completion
 autoload -Uz compinit && compinit
