@@ -12,16 +12,21 @@ export LESS="--RAW-CONTROL-CHARS"
 # No bell: Shut up Zsh
 unsetopt BEEP
 
-ANDROID_HOME=/Users/swilliams/Library/Android/sdk
-JAVA_HOME=$HOMEBREW_PREFIX/opt/openjdk@17
+export ANDROID_HOME=/Users/swilliams/Library/Android/sdk
+PATH=$ANDROID_HOME/platform-tools/:$PATH
+export JAVA_HOME=$HOMEBREW_PREFIX/opt/openjdk@17
 
 PATH=~/Documents/Code/sonar-scanner-4.8.0.2856-macosx/bin:${PATH}
 PATH=~/.emacs.d/bin:${PATH}
 PATH=~/go/bin:${PATH}
 PATH=~/bin:${PATH}
 PATH=~/.local/bin:${PATH}
-PATH=~/.nodenv/shims:${PATH}
 PATH=$JAVA_HOME/bin/:$PATH
+
+export GEM_HOME=$HOME/gems
+PATH=$HOME/gems/bin:$PATH
+
+export PATH="$(brew --prefix)/opt/postgresql@12/bin:$PATH"
 
 PATH=~/.gvm/bin:${PATH}
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
@@ -70,22 +75,17 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -50'"
 source ~/.dotfiles/zsh/shortcuts.zsh
 source ~/.dotfiles/zsh/aliases.zsh
 source ~/.dotfiles/zsh/sensible.zsh
+source ~/secrets.zsh
 source ~/.env
 
 eval "$(zoxide init zsh)"
 
-# rbenv
-eval "$(/opt/homebrew/bin/rbenv init - zsh)"
-export PATH="$(brew --prefix)/opt/postgresql@12/bin:$PATH"
-
-#pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+# Mise
+eval "$($(brew --prefix)/bin/mise activate zsh)"
 
 # Save command history
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
+HISTSIZE=3000
 SAVEHIST=10000
 setopt HIST_EXPIRE_DUPS_FIRST
 

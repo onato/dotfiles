@@ -1,8 +1,10 @@
 #!/bin/bash
 
+default_branch=$(git remote show origin | grep 'HEAD branch' | awk '{print $NF}')
+
 # Query the "In Progress" issue from Jira
 # Replace 'status = "In Progress"' with the actual JQL that matches your project's configuration
-ISSUE_KEY=$(jira issues list --plain -q'status = "In Progress"' --plain | awk -F '\t' 'NR > 1 {print $2}' | head -n 1)
+ISSUE_KEY=$(jira issues list --plain -q'status = "In Progress"' --plain -a"$(jira me)"| awk -F '\t' 'NR > 1 {print $2}' | head -n 1)
 ISSUE_DESC=$(git log -1 --pretty=format:"%s")
 if [ -z "$ISSUE_KEY" ]; then
     echo "No 'In Progress' issue found."
@@ -27,13 +29,15 @@ echo "Pull request created: $PR_URL"
 # Step 6: Merge the pull request
 # This step requires that branch protection rules allow for automatic merging without review
 # You might need to adjust or remove this step based on your project's requirements
-gh pr merge "$BRANCH_NAME" --squash --subject "$ISSUE_DESC #$ISSUE_KEY" --delete-branch
+# If the merge fails with squash, try merge
+gh pr merge "$BRANCH_NAME" --squash --subject "$ISSUE_DESC #$ISSUE_KEY" --delete-branch \
+    || gh pr merge "$BRANCH_NAME" --merge --subject "$ISSUE_DESC #$ISSUE_KEY" --delete-branch
 
 # Step 7: Switch back to the previous branch (assuming 'main')
-git checkout main
+git checkout $default_branch
 
 # Step 8: Pull the latest changes
-git pull origin main
+git pull origin $default_branch 
 
 echo "Done."
 

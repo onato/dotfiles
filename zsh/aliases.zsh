@@ -1,6 +1,9 @@
 alias -s {rs,md}=vim
 bindkey '^ ' autosuggest-accept
 
+alias new-worktree="source new-exceed-worktree"
+alias burnpack="bundle install && yarn install && RAILS_ENV=development bin/vite build"
+alias refresh-rails="cp ../.env . && burnpack && bundle exec rails db:migrate && bundle exec rails db:migrate RAILS_ENV=test"
 alias reload="source ~/.zshrc"
 alias aliases="vim ~/.dotfiles/zsh/aliases.zsh && reload"
 alias rebrew="brew bundle install --file ~/.dotfiles/Brewfile"
@@ -9,6 +12,7 @@ alias bf="brewfile"
 alias vimrc="vim ~/.config/nvim/lua/custom/init.lua"
 alias show_sim_touch="defaults write com.apple.iphonesimulator ShowSingleTouches 1"
 alias tn="tmux new -s $(basename $(pwd))"
+alias gcd='cd "$(git worktree list --porcelain | grep worktree | awk '"'"'{print $2}'"'"' | fzf)"'
 
 alias r=ranger
 alias cat=bat
@@ -20,10 +24,9 @@ alias bi="bundle install"
 alias webserver="open http://localhost:5001; ruby -run -e httpd -- -p 5001 ."
 alias list_feats="git log $(git tag --sort=-creatordate | head -n 2 | tail -n 1)...HEAD --pretty=format:'%<(20)%ar %s' | grep 'feat:'"
 
-alias l='exa'
-alias la='exa -a'
-alias ll='exa -lah'
-alias ls='exa --color=auto'
+alias l='eza'
+alias la='eza -a'
+alias ls='eza -lah'
 
 # Projects
 alias m='cd mobile-core'
@@ -51,6 +54,11 @@ function be() {
   bundle exec $*
 }
 
+#Rails
+alias rc='bundle exec rails console'
+alias rs='bundle exec rails server'
+alias rdbm='rake db:migrate db:test:clone_structure'
+
 #Git
 alias lg='lazygit'
 alias g='git status'
@@ -59,19 +67,19 @@ alias grc='git rebase --continue'
 alias gpp='git pull --rebase && git push'
 alias gmff='git merge --ff-only'
 alias gpull='git pull origin master'
-alias gpush='git push origin master'
+alias gp='git push origin master'
 alias gc='git commit -v'
 alias gca='git commit -v -a'
 alias gl='git log --oneline'
 
 #create a new branch & switch to it
 function gcb() {
-  git checkout -b $*
+  git switch -c $*
 }
 
 #move to a branch
-function gco() {
-  git checkout $*
+function gsw() {
+  git switch $*
 }
 
 #commit pending changes and quote args

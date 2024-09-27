@@ -2,9 +2,19 @@ tap "homebrew/bundle"
 tap "a7ex/homebrew-formulae" # for xcresultparser
 tap "noahgorstein/tap"
 tap "arl/arl"
-
+tap "nikitabobko/tap/aerospace"
 tap "buo/cask-upgrade"
-tap "homebrew/cask-fonts"
+
+# Exceed
+tap "centrifugal/centrifugo"
+brew "centrifugo"
+brew "redis"
+brew "postgresql@14"
+brew "imagemagick"
+brew "opensearch"
+brew "memcached"
+brew "cmake"
+brew "yarn"
 
 # SSH
 brew "github-keygen"
@@ -33,9 +43,13 @@ brew "swiftgen"
 brew "xcbeautify"
 brew "xcresultparser"
 
+# SSH
+brew "awscli"
+
 # General Dev Tools
 cask "alacritty" # terminal
 cask "wezterm" # terminal
+cask "nikitabobko/tap/aerospace@0.12.0"
 cask "kitty" # terminal
 cask "warp" # terminal
 brew "starship" # shell prompt
@@ -51,6 +65,8 @@ brew "yazi"
   brew "ffmpegthumbnailer"
   brew "unar"
   brew "poppler"
+  brew "sevenzip"
+  brew "font-symbols-only-nerd-font"
 
 brew "entr" # Run arbitrary commands when files change
 
@@ -80,12 +96,12 @@ brew "zoxide"
 
 # Programming Languages
 
-# Use conda instead
-# brew "pyenv"
-# brew "pipenv"
-
+cask "miniconda"
 brew "rbenv"
+# Node
 brew "mise" # version manager for nvm, nodenv, pyenv, etc.
+brew "pnpm"
+
 # brew "rust"
 # brew "cargo-nextest" # don't install this because it installs rust
 brew "rustup-init"
@@ -104,6 +120,8 @@ brew "fribidi" # required to the DOC R Work
 # brew "jupyterlab"
 brew "php"
 brew "openjdk@17"
+brew "groovy"
+cask "android-sdk"
 
 # Databases
 brew "sqlite"
@@ -137,7 +155,7 @@ brew "bat"
 brew "zoxide" # use z or ze instead of cd
 brew "tokei" # Program that allows you to count code, quickly
 brew "dust" # du + rust = dust. Like du but more intuitive. Displays how much space each directory is using.
-brew "exa" # Modern replacement for 'ls'
+brew "eza" # Modern replacement for 'ls'
 brew "diff-so-fancy"
 brew "ripgrep"
 brew "htop"
@@ -164,6 +182,9 @@ brew "nvim"
 
 #Fonts
 cask "sf-symbols"
+
+# Mac
+cask "qlcolorcode"
 
 # App Store Apps
 mas "Xcode", id: 497799835
