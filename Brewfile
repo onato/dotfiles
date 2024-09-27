@@ -2,7 +2,6 @@ tap "homebrew/bundle"
 tap "a7ex/homebrew-formulae" # for xcresultparser
 tap "noahgorstein/tap"
 tap "arl/arl"
-tap "nikitabobko/tap/aerospace"
 tap "buo/cask-upgrade"
 
 # Exceed
@@ -49,7 +48,7 @@ brew "awscli"
 # General Dev Tools
 cask "alacritty" # terminal
 cask "wezterm" # terminal
-cask "nikitabobko/tap/aerospace@0.12.0"
+cask "nikitabobko/tap/aerospace"
 cask "kitty" # terminal
 cask "warp" # terminal
 brew "starship" # shell prompt
@@ -61,12 +60,6 @@ cask "github"
 brew "lazygit"
 brew "ranger" # file manager
 brew "lf" # file manager
-brew "yazi" 
-  brew "ffmpegthumbnailer"
-  brew "unar"
-  brew "poppler"
-  brew "sevenzip"
-  brew "font-symbols-only-nerd-font"
 
 brew "entr" # Run arbitrary commands when files change
 
@@ -104,7 +97,7 @@ brew "pnpm"
 
 # brew "rust"
 # brew "cargo-nextest" # don't install this because it installs rust
-brew "rustup-init"
+brew "rustup"
 brew "rust-analyzer"
 brew "sccache" # cache for rust builds
 brew "golang"
