@@ -90,7 +90,7 @@ function gg() {
 
 # fetch gitignore templates from gitignore.io
 function gi() {
-  curl https://www.gitignore.io/api/$*
+  curl https://www.toptal.com/developers/gitignore/api/$* > .gitignore
 }
 
 alias gd='git diff'
