@@ -1,6 +1,7 @@
 alias -s {rs,md}=vim
 bindkey '^ ' autosuggest-accept
 
+alias c="pbcopy"
 alias new-worktree="source new-exceed-worktree"
 alias burnpack="bundle install && yarn install && RAILS_ENV=development bin/vite build"
 alias refresh-rails="cp ../.env . && burnpack && bundle exec rails db:migrate && bundle exec rails db:migrate RAILS_ENV=test"

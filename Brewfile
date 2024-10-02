@@ -172,6 +172,7 @@ brew "cmdg" # gmail client
 
 # Editors
 brew "nvim"
+  brew "libyaml" # required for lazyvim
 
 #Fonts
 cask "sf-symbols"
