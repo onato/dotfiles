@@ -35,6 +35,7 @@ while [ $YEAR -lt $CURRENT_YEAR ] || ([ $YEAR -eq $CURRENT_YEAR ] && [ $MONTH -l
   NEXT_MONTH_PADDED=$(printf "%02d" $NEXT_MONTH)
 
   JQL="assignee = currentUser() AND statusCategory = Done AND statusCategoryChangedDate >= startOfMonth($YEAR-$MONTH_PADDED) AND statusCategoryChangedDate < startOfMonth($NEXT_YEAR-$NEXT_MONTH_PADDED)"
+  echo $JQL
 
   # URL encode the JQL query
   ENCODED_JQL=$(echo $JQL | jq -sRr @uri)
@@ -56,9 +57,9 @@ while [ $YEAR -lt $CURRENT_YEAR ] || ([ $YEAR -eq $CURRENT_YEAR ] && [ $MONTH -l
   echo "Year: $YEAR, Month: $MONTH_PADDED, Done Issues: $ISSUE_COUNT"
 
   # Increment the month and year
-  MONTH=$((MONTH+1))
+  MONTH=$((MONTH + 1))
   if [ $MONTH -gt 12 ]; then
     MONTH=1
-    YEAR=$((YEAR+1))
+    YEAR=$((YEAR + 1))
   fi
 done
