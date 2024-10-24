@@ -23,11 +23,11 @@ fi
 # Initialize previous year variable
 PREV_YEAR=${CURRENT_YEAR+ 1}
 
-# Loop over each month from the current month back 6 months
+# Loop over each month until reaching July 2024
 YEAR=$CURRENT_YEAR
 MONTH=$CURRENT_MONTH
 
-for ((i = 0; i < 6; i++)); do
+while [ $YEAR -gt 2024 ] || [ $MONTH -gt 7 ]; do
   # Calculate the relative month offset
   OFFSET=$((i))
 
