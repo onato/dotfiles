@@ -20,6 +20,9 @@ if [ $START_MONTH -le 0 ]; then
   START_YEAR=$((START_YEAR - 1))
 fi
 
+# Initialize previous year variable
+PREV_YEAR=$YEAR
+
 # Loop over each month from the current month back 6 months
 YEAR=$CURRENT_YEAR
 MONTH=$CURRENT_MONTH
@@ -50,8 +53,14 @@ for ((i = 0; i < 6; i++)); do
   # Get the month name
   MONTH_NAME=$(date -v1d -v-${OFFSET}m +%B)
 
-  # Print the count of issues for the month
-  echo "Year: $YEAR, Month: $MONTH_NAME, Done Issues: $ISSUE_COUNT"
+  # Print the year if it has changed
+  if [ $YEAR -ne $PREV_YEAR ]; then
+    echo "Year: $YEAR"
+    PREV_YEAR=$YEAR
+  fi
+
+  # Print the count of issues for the month with indentation
+  echo -e "\tMonth: $MONTH_NAME, Done Issues: $ISSUE_COUNT"
 
   # Decrement the month and year
   MONTH=$((MONTH - 1))
