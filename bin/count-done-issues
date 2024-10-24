@@ -25,7 +25,7 @@ while [ $YEAR -lt $CURRENT_YEAR ] || ([ $YEAR -eq $CURRENT_YEAR ] && [ $MONTH -l
   MONTH_PADDED=$(printf "%02d" $MONTH)
 
   # Jira JQL query to find issues assigned to you and marked as done in the specific month
-  JQL="assignee = currentUser() AND statusCategory = Done AND statusCategoryChangedDate >= startOfMonth($YEAR-$MONTH_PADDED) AND statusCategoryChangedDate < startOfMonth($YEAR-$(printf "%02d" $((MONTH % 12 + 1))))"
+  JQL="assignee = currentUser() AND statusCategory = Done AND statusCategoryChangedDate >= startOfMonth($YEAR-$MONTH_PADDED) AND statusCategoryChangedDate < startOfMonth($YEAR-$MONTH_PADDED +1)"
 
   # URL encode the JQL query
   ENCODED_JQL=$(echo $JQL | jq -sRr @uri)
