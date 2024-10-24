@@ -4,11 +4,14 @@
 JIRA_DOMAIN="intellum.atlassian.net"
 JIRA_USERNAME="swilliams@intellum.com"
 
-# Calculate the date one month ago
-ONE_MONTH_AGO=$(date -v -1m +%Y-%m-%d)
-
-# Jira JQL query to find issues assigned to you and marked as done in the last month
-JQL="assignee = currentUser() AND statusCategory = Done AND statusCategoryChangedDate >= startOfMonth(0)"
+# Check if the "last" parameter is passed
+if [ "$1" == "last" ]; then
+  # Jira JQL query to find issues assigned to you and marked as done in the last month
+  JQL="assignee = currentUser() AND statusCategory = Done AND statusCategoryChangedDate >= startOfMonth(-1) AND statusCategoryChangedDate < startOfMonth(0)"
+else
+  # Jira JQL query to find issues assigned to you and marked as done in the current month
+  JQL="assignee = currentUser() AND statusCategory = Done AND statusCategoryChangedDate >= startOfMonth(0)"
+fi
 
 # URL encode the JQL query
 ENCODED_JQL=$(echo $JQL | jq -sRr @uri)
