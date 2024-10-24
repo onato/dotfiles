@@ -47,8 +47,11 @@ for ((i = 0; i < 6; i++)); do
   # Extract the count of issues
   ISSUE_COUNT=$(echo $RESPONSE | jq '.total')
 
+  # Get the month name
+  MONTH_NAME=$(date -d "$YEAR-$MONTH-01" +%B)
+
   # Print the count of issues for the month
-  echo "Year: $YEAR, Month: $MONTH, Done Issues: $ISSUE_COUNT"
+  echo "Year: $YEAR, Month: $MONTH_NAME, Done Issues: $ISSUE_COUNT"
 
   # Decrement the month and year
   MONTH=$((MONTH - 1))
