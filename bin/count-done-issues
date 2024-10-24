@@ -24,13 +24,12 @@ fi
 YEAR=$CURRENT_YEAR
 MONTH=$CURRENT_MONTH
 
-for ((i=0; i<6; i++)); do
+for ((i = 0; i < 6; i++)); do
   # Calculate the relative month offset
-  OFFSET=$((i + 1))
+  OFFSET=$((i))
 
   # Jira JQL query to find issues assigned to you and marked as done in the specific month
-  JQL="assignee = currentUser() AND statusCategory = Done AND statusCategoryChangedDate >= startOfMonth(-${OFFSET}M) AND statusCategoryChangedDate < startOfMonth(-$((OFFSET - 1))M)"
-  echo $JQL
+  JQL="assignee = currentUser() AND statusCategory = Done AND statusCategoryChangedDate >= startOfMonth(-${OFFSET}M) AND statusCategoryChangedDate < endOfMonth(-$((OFFSET))M)"
 
   # URL encode the JQL query
   ENCODED_JQL=$(echo $JQL | jq -sRr @uri)
@@ -43,13 +42,13 @@ for ((i=0; i<6; i++)); do
     -H "Content-Type: application/json" $JIRA_API_URL)
 
   # Print the raw response for debugging
-  echo "API Response: $RESPONSE"
+  # echo "$RESPONSE" | jq '.issues[] | {title: .fields.summary, url: .self}'
 
   # Extract the count of issues
   ISSUE_COUNT=$(echo $RESPONSE | jq '.total')
 
   # Print the count of issues for the month
-  echo "Year: $YEAR, Month: $MONTH_PADDED, Done Issues: $ISSUE_COUNT"
+  echo "Year: $YEAR, Month: $MONTH, Done Issues: $ISSUE_COUNT"
 
   # Decrement the month and year
   MONTH=$((MONTH - 1))
