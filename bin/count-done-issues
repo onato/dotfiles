@@ -34,9 +34,14 @@ while [ $YEAR -lt $CURRENT_YEAR ] || ([ $YEAR -eq $CURRENT_YEAR ] && [ $MONTH -l
   JIRA_API_URL="https://$JIRA_DOMAIN/rest/api/2/search?jql=$ENCODED_JQL"
 
   # Fetch the count of issues from Jira
-  ISSUE_COUNT=$(curl -s -u $JIRA_USERNAME:$JIRA_API_TOKEN -X GET \
-    -H "Content-Type: application/json" $JIRA_API_URL |
-    jq '.total')
+  RESPONSE=$(curl -s -u $JIRA_USERNAME:$JIRA_API_TOKEN -X GET \
+    -H "Content-Type: application/json" $JIRA_API_URL)
+
+  # Print the raw response for debugging
+  echo "API Response: $RESPONSE"
+
+  # Extract the count of issues
+  ISSUE_COUNT=$(echo $RESPONSE | jq '.total')
 
   # Print the count of issues for the month
   echo "Year: $YEAR, Month: $MONTH_PADDED, Done Issues: $ISSUE_COUNT"
