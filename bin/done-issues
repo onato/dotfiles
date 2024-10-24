@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Replace these variables with your actual Jira details
+JIRA_DOMAIN="intellum.atlassian.net"
+JIRA_USERNAME="swilliams@intellum.com"
+
+# Calculate the date one month ago
+ONE_MONTH_AGO=$(date -v -1m +%Y-%m-%d)
+
+# Jira JQL query to find issues assigned to you and marked as done in the last month
+JQL="assignee = currentUser() AND statusCategory = Done AND statusCategoryChangedDate >= startOfMonth(0)"
+
+# URL encode the JQL query
+ENCODED_JQL=$(echo $JQL | jq -sRr @uri)
+
+# Jira API endpoint
+JIRA_API_URL="https://$JIRA_DOMAIN/rest/api/2/search?jql=$ENCODED_JQL"
+
+# Fetch the issues from Jira and format the output
+curl -s -u $JIRA_USERNAME:$JIRA_API_TOKEN -X GET \
+  -H "Content-Type: application/json" $JIRA_API_URL |
+  jq '.issues[] | {title: .fields.summary, url: .self}'
+
+# Print the count of issues found
+curl -s -u $JIRA_USERNAME:$JIRA_API_TOKEN -X GET \
+  -H "Content-Type: application/json" $JIRA_API_URL |
+  jq '.total'
