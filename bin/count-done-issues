@@ -25,20 +25,11 @@ YEAR=$CURRENT_YEAR
 MONTH=$CURRENT_MONTH
 
 for ((i=0; i<6; i++)); do
-  # Format the month as two digits
-  MONTH_PADDED=$(printf "%02d" $MONTH)
+  # Calculate the relative month offset
+  OFFSET=$((i + 1))
 
   # Jira JQL query to find issues assigned to you and marked as done in the specific month
-  # Calculate the next month and year
-  NEXT_MONTH=$((MONTH + 1))
-  NEXT_YEAR=$YEAR
-  if [ $NEXT_MONTH -gt 12 ]; then
-    NEXT_MONTH=1
-    NEXT_YEAR=$((YEAR + 1))
-  fi
-  NEXT_MONTH_PADDED=$(printf "%02d" $NEXT_MONTH)
-
-  JQL="assignee = currentUser() AND statusCategory = Done AND statusCategoryChangedDate >= startOfMonth($YEAR-$MONTH_PADDED) AND statusCategoryChangedDate < startOfMonth($YEAR-$MONTH_PADDED +1M)"
+  JQL="assignee = currentUser() AND statusCategory = Done AND statusCategoryChangedDate >= startOfMonth(-${OFFSET}M) AND statusCategoryChangedDate < startOfMonth(-$((OFFSET - 1))M)"
   echo $JQL
 
   # URL encode the JQL query
