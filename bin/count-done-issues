@@ -21,7 +21,7 @@ if [ $START_MONTH -le 0 ]; then
 fi
 
 # Initialize previous year variable
-PREV_YEAR=$CURRENT_YEAR
+PREV_YEAR=${CURRENT_YEAR+ 1}
 
 # Loop over each month from the current month back 6 months
 YEAR=$CURRENT_YEAR
@@ -60,7 +60,7 @@ for ((i = 0; i < 6; i++)); do
   fi
 
   # Print the count of issues for the month with indentation
-  echo -e "\tMonth: $MONTH_NAME, Done Issues: $ISSUE_COUNT"
+  echo -e "\t$MONTH_NAME: $ISSUE_COUNT"
 
   # Decrement the month and year
   MONTH=$((MONTH - 1))
