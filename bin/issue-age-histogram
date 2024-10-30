@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Check if jq is installed
+if ! command -v jq &>/dev/null; then
+  echo "jq could not be found, please install it to proceed."
+  exit
+fi
+
+# Jira credentials and URL
+JIRA_URL="https://intellum.atlassian.net"
+JIRA_USER="swilliams@intellum.com"
+JIRA_API_TOKEN="$JIRA_API_TOKEN"
+
+# JQL for fetching issues in the backlog of board with ID 48
+JQL='filter=10246%20ORDER%20BY%20created%20DESC'
+
+# Fetch issues from Jira using the JQL
+response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
+  "$JIRA_URL/rest/api/3/search?jql=$JQL&fields=created&maxResults=200")
+
+# Calculate issue ages
+declare -A age_histogram
+
+for issue in $(echo $response | jq -c '.issues[]'); do
+  created=$(echo $issue | jq -r '.fields.created')
+  created_date=$(date -u -j -f "%Y-%m-%dT%H:%M:%S" "${created:0:19}" "+%s")
+  current_date=$(date "+%s")
+  days_open=$(((current_date - created_date) / 86400))
+  
+  # Increment the histogram count for this age
+  age_histogram[$days_open]=$((age_histogram[$days_open] + 1))
+done
+
+# Display the histogram
+echo "Histogram of issue ages (in days):"
+for age in "${!age_histogram[@]}"; do
+  echo "$age days: ${age_histogram[$age]}"
+done
