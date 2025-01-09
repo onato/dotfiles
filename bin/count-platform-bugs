@@ -60,7 +60,7 @@ done
 
 # Generate data file for gnuplot
 DATA_FILE=$(mktemp)
-for key in "${!ISSUE_COUNTS[@]}"; do
+for key in $(printf "%s\n" "${!ISSUE_COUNTS[@]}" | sort -t '-' -k1,1n -k2,2M); do
   echo -e "$key\t${ISSUE_COUNTS[$key]}" >>$DATA_FILE
 done
 
