@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Ensure JIRA_API_TOKEN is set in your environment
+if [ -z "$JIRA_API_TOKEN" ]; then
+  echo "Error: JIRA_API_TOKEN is not set."
+  exit 1
+fi
+JIRA_DOMAIN="intellum.atlassian.net"
+JIRA_USERNAME="swilliams@intellum.com"
+
+# Get the current year and month
+CURRENT_YEAR=$(date +%Y)
+CURRENT_MONTH=$(date +%m)
+
+# Initialize previous year variable
+PREV_YEAR=${CURRENT_YEAR+ 1}
+
+# Loop over each month for the last year
+YEAR=$CURRENT_YEAR
+MONTH=$CURRENT_MONTH
+
+for ((i=0; i<12; i++)); do
+  # Calculate the relative month offset
+  OFFSET=$(((CURRENT_YEAR - YEAR) * 12 + (CURRENT_MONTH - MONTH)))
+
+  # Jira JQL query to find issues in the specified project and conditions
+  JQL='project = "Platform Administration" AND issuetype = Bug AND created <= "2024-09-01" AND (resolved > "2024-09-01" OR resolved is EMPTY)'
+
+  # URL encode the JQL query
+  ENCODED_JQL=$(echo $JQL | jq -sRr @uri)
+
+  # Jira API endpoint
+  JIRA_API_URL="https://$JIRA_DOMAIN/rest/api/2/search?jql=$ENCODED_JQL"
+
+  # Fetch the count of issues from Jira
+  RESPONSE=$(curl -s -u $JIRA_USERNAME:$JIRA_API_TOKEN -X GET \
+    -H "Content-Type: application/json" $JIRA_API_URL)
+
+  # Print the raw response for debugging
+  # echo "$RESPONSE" | jq '.issues[] | {title: .fields.summary, url: .self}'
+
+  # Extract the count of issues
+  ISSUE_COUNT=$(echo $RESPONSE | jq '.total')
+
+  # Get the month name
+  MONTH_NAME=$(date -v1d -v-${OFFSET}m +%B)
+
+  # Print the year if it has changed
+  if [ $YEAR -ne $PREV_YEAR ]; then
+    echo "Year: $YEAR"
+    PREV_YEAR=$YEAR
+  fi
+
+  # Print the count of issues for the month with indentation
+  echo -e "\t$MONTH_NAME: $ISSUE_COUNT"
+
+  # Decrement the month and year
+  MONTH=$((MONTH - 1))
+  if [ $MONTH -le 0 ]; then
+    MONTH=12
+    YEAR=$((YEAR - 1))
+  fi
+done
