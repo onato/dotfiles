@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Ensure JIRA_API_TOKEN is set in your environment
 if [ -z "$JIRA_API_TOKEN" ]; then
@@ -13,15 +13,16 @@ CURRENT_YEAR=$(date +%Y)
 CURRENT_MONTH=$(date +%m)
 
 # Initialize an array to store issue counts
-declare -A ISSUE_COUNTS
+typeset -A ISSUE_COUNTS
 
 # Loop over each month for the last year
 YEAR=$CURRENT_YEAR
 MONTH=$CURRENT_MONTH
 
-for ((i=0; i<12; i++)); do
+for ((i = 0; i < 12; i++)); do
   # Calculate the relative month offset
   OFFSET=$(((CURRENT_YEAR - YEAR) * 12 + (CURRENT_MONTH - MONTH)))
+  echo $OFFSET
 
   # Jira JQL query to find issues in the specified project and conditions
   CURRENT_DATE=$(date -v1d -v-${OFFSET}m +%Y-%m-%d)
@@ -60,7 +61,7 @@ done
 # Generate data file for gnuplot
 DATA_FILE=$(mktemp)
 for key in "${!ISSUE_COUNTS[@]}"; do
-  echo -e "$key\t${ISSUE_COUNTS[$key]}" >> $DATA_FILE
+  echo -e "$key\t${ISSUE_COUNTS[$key]}" >>$DATA_FILE
 done
 
 # Plot the data using gnuplot
