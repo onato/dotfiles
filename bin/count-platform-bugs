@@ -24,7 +24,7 @@ for ((i=0; i<12; i++)); do
   OFFSET=$(((CURRENT_YEAR - YEAR) * 12 + (CURRENT_MONTH - MONTH)))
 
   # Jira JQL query to find issues in the specified project and conditions
-  CURRENT_DATE=$(date +%Y-%m-%d)
+  CURRENT_DATE=$(date -v1d -v-${OFFSET}m +%Y-%m-%d)
   JQL="project = \"Platform Administration\" AND issuetype = Bug AND created <= \"$CURRENT_DATE\" AND (resolved > \"$CURRENT_DATE\" OR resolved is EMPTY)"
 
   # URL encode the JQL query
