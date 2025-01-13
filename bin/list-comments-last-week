@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Check if jq is installed
+if ! command -v jq &>/dev/null; then
+  echo "jq could not be found, please install it to proceed."
+  exit
+fi
+
+# Jira credentials and URL
+JIRA_URL="https://$JIRA_DOMAIN"
+JIRA_USER="$JIRA_USERNAME"
+JIRA_API_TOKEN="$JIRA_API_TOKEN"
+
+# Calculate the start and end dates for last week
+end_date=$(date -v-monday -v-1w "+%Y-%m-%d")
+start_date=$(date -v-monday -v-2w "+%Y-%m-%d")
+
+# JQL for fetching issues you commented on last week
+JQL="commentedBy = currentUser() AND updated >= '$start_date' AND updated < '$end_date'"
+
+# Fetch issues from Jira using the JQL
+response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
+  "$JIRA_URL/rest/api/3/search?jql=$JQL&fields=key,summary&maxResults=200")
+
+# List the issues
+issue_count=0
+
+for issue in $(echo $response | jq -c '.issues[]'); do
+  issue_key=$(echo $issue | jq -r '.key')
+  summary=$(echo $issue | jq -r '.fields.summary')
+  issue_url="$JIRA_URL/browse/$issue_key"
+  echo -e "Issue $issue_key: $summary \t\t$issue_url"
+  issue_count=$((issue_count + 1))
+done
+
+echo "Total issues commented on last week: $issue_count"
