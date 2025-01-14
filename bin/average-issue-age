@@ -14,9 +14,12 @@ JIRA_API_TOKEN="$JIRA_API_TOKEN"
 # JQL for fetching issues
 JQL='type = Bug and project not in (VUL, JS, SQP, SEC, SES, SYS) AND priority = P3'
 
-# Fetch issues from Jira using the JQL
+# URL encode the JQL
+encoded_jql=$(jq -rn --arg jql "$JQL" '$jql|@uri')
+
+# Fetch issues from Jira using the encoded JQL
 response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
-  "$JIRA_URL/rest/api/3/search?jql=$JQL&fields=created&maxResults=200")
+  "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=created&maxResults=200")
 
 echo curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" "$JIRA_URL/rest/api/3/search?jql=$JQL&fields=created&maxResults=200"
 

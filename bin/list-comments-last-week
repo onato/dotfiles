@@ -19,9 +19,12 @@ start_date=$(date -v-monday -v-1w "+%Y-%m-%d")
 JQL="commentedBy = currentUser() AND updated >= '$start_date' AND updated < '$end_date'"
 echo $JQL
 
-# Fetch issues from Jira using the JQL
+# URL encode the JQL
+encoded_jql=$(jq -rn --arg jql "$JQL" '$jql|@uri')
+
+# Fetch issues from Jira using the encoded JQL
 response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
-  "$JIRA_URL/rest/api/3/search?jql=$JQL&fields=key,summary&maxResults=200")
+  "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=key,summary&maxResults=200")
 
 # List the issues
 issue_count=0
