@@ -68,10 +68,10 @@ for month_offset in {16..0}; do
 done
 
 # Generate graphs using gnuplot
-gnuplot -e "set terminal png size 800,600; set output 'issue_count.png'; set title 'Number of Issues per Month'; set xlabel 'Month'; set ylabel 'Issue Count'; set xtics rotate; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues';"
-gnuplot -e "set terminal png size 800,600; set output 'average_age.png'; set title 'Average Issue Age per Month'; set xlabel 'Month'; set ylabel 'Average Age (days)'; set xtics rotate; plot '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age';"
+gnuplot -e "set terminal png size 800,600; set output 'output/issue_count.png'; set title 'Number of Issues per Month'; set xlabel 'Month'; set ylabel 'Issue Count'; set xtics rotate; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues';"
+gnuplot -e "set terminal png size 800,600; set output 'output/average_age.png'; set title 'Average Issue Age per Month'; set xlabel 'Month'; set ylabel 'Average Age (days)'; set xtics rotate; plot '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age';"
 
 # Generate combined graph using gnuplot
-gnuplot -e "set terminal png size 800,600; set output 'combined_graph.png'; set title 'Issues and Average Age per Month'; set xlabel 'Month'; set ylabel 'Count / Average Age'; set y2label 'Average Age (days)'; set ytics nomirror; set y2tics; set xtics rotate; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues' axis x1y1, '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age' axis x1y2;"
+gnuplot -e "set terminal png size 800,600; set output 'output/combined_graph.png'; set title 'Issues and Average Age per Month'; set xlabel 'Month'; set ylabel 'Count / Average Age'; set y2label 'Average Age (days)'; set ytics nomirror; set y2tics; set xtics rotate; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues' axis x1y1, '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age' axis x1y2;"
 
 echo "Graphs generated: issue_count.png, average_age.png, and combined_graph.png"
