@@ -20,7 +20,7 @@ echo "# Month AverageAge" >$age_data_file
 for month_offset in {16..0}; do
   # Calculate the month name for the current offset
   month_name=$(date -v-${month_offset}m "+%B")
-  JQL="type = Bug and project not in (VUL, JS, SQP, SEC, SES, SYS) AND priority = P3 AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset)) AND created <= endOfMonth(-$month_offset)"
+  JQL="type = Bug and project not in (DES, VUL, JS, SQP, SEC, SES, SYS) AND priority = P3 AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset)) AND created <= endOfMonth(-$month_offset)"
 
   # URL encode the JQL
   encoded_jql=$(jq -rn --arg jql "$JQL" '$jql|@uri')
@@ -46,7 +46,7 @@ for month_offset in {16..0}; do
       created=$(echo $issue | jq -r '.fields.created')
       issue_key=$(echo $issue | jq -r '.key')
       created_date=$(date -u -j -f "%Y-%m-%dT%H:%M:%S" "${created:0:19}" "+%s")
-      current_date=$(date "+%s")
+      current_date=$(date -v-${month_offset}m -v1d -v+1m "+%s")
       days_open=$(((current_date - created_date) / 86400))
       total_days=$((total_days + days_open))
       issue_count=$((issue_count + 1))
