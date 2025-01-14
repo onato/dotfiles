@@ -12,7 +12,8 @@ JIRA_USER="$JIRA_USERNAME"
 JIRA_API_TOKEN="$JIRA_API_TOKEN"
 
 for month_offset in {0..11}; do
-  # JQL for fetching issues
+  # Calculate the month name for the current offset
+  month_name=$(date -v-${month_offset}m "+%B")
   JQL="type = Bug and project not in (VUL, JS, SQP, SEC, SES, SYS) AND priority = P3 AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset))"
 
   # URL encode the JQL
@@ -42,6 +43,6 @@ for month_offset in {0..11}; do
     echo "No issues found for month offset $month_offset."
   else
     average_days=$(echo "scale=2; $total_days / $issue_count" | bc)
-    echo "Month offset: $month_offset, Issues found: $issue_count, Average time issues have been open: $average_days days"
+    echo "Month: $month_name, Issues found: $issue_count, Average time issues have been open: $average_days days"
   fi
 done
