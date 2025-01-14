@@ -11,6 +11,12 @@ JIRA_URL="https://$JIRA_DOMAIN"
 JIRA_USER="$JIRA_USERNAME"
 JIRA_API_TOKEN="$JIRA_API_TOKEN"
 
+# Prepare data files for gnuplot
+issue_data_file="issue_data.dat"
+age_data_file="age_data.dat"
+echo "# Month IssueCount" > $issue_data_file
+echo "# Month AverageAge" > $age_data_file
+
 for month_offset in {0..11}; do
   # Calculate the month name for the current offset
   month_name=$(date -v-${month_offset}m "+%B")
@@ -57,4 +63,12 @@ for month_offset in {0..11}; do
     average_days=$(echo "scale=2; $total_days / $issue_count" | bc)
     echo "Month: $month_name, Issues found: $issue_count, Average time issues have been open: $average_days days"
   fi
+  echo "$month_name $issue_count" >> $issue_data_file
+  echo "$month_name $average_days" >> $age_data_file
 done
+
+# Generate graphs using gnuplot
+gnuplot -e "set terminal png size 800,600; set output 'issue_count.png'; set title 'Number of Issues per Month'; set xlabel 'Month'; set ylabel 'Issue Count'; set xtics rotate; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues';"
+gnuplot -e "set terminal png size 800,600; set output 'average_age.png'; set title 'Average Issue Age per Month'; set xlabel 'Month'; set ylabel 'Average Age (days)'; set xtics rotate; plot '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age';"
+
+echo "Graphs generated: issue_count.png and average_age.png"
