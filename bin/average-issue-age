@@ -26,7 +26,10 @@ for month_offset in {0..11}; do
   while true; do
     # Fetch issues from Jira using the encoded JQL
     response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
-      "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=created&maxResults=200&startAt=$start_at")
+      "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=created&maxResults=100&startAt=$start_at")
+
+    # echo curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
+    #   "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=created&maxResults=100&startAt=$start_at"
 
     issues=$(echo $response | jq -c '.issues[]')
     if [ -z "$issues" ]; then
@@ -45,7 +48,7 @@ for month_offset in {0..11}; do
       # echo -e "Issue $issue_key has been open for $days_open days. \t\t$issue_url"
     done
 
-    start_at=$((start_at + 200))
+    start_at=$((start_at + 100))
   done
 
   if [ $issue_count -eq 0 ]; then
