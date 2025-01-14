@@ -7,8 +7,8 @@ if ! command -v jq &>/dev/null; then
 fi
 
 # Jira credentials and URL
-JIRA_URL="https://intellum.atlassian.net"
-JIRA_USER="swilliams@intellum.com"
+JIRA_URL="https://$JIRA_DOMAIN"
+JIRA_USER="$JIRA_USERNAME"
 JIRA_API_TOKEN="$JIRA_API_TOKEN"
 
 # JQL for fetching issues in the backlog of board with ID 48

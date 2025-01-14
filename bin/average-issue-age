@@ -12,11 +12,13 @@ JIRA_USER="$JIRA_USERNAME"
 JIRA_API_TOKEN="$JIRA_API_TOKEN"
 
 # JQL for fetching issues
-JQL='filter=10286 AND project = "Content Delivery" AND statusCategory != Done ORDER BY created ASC'
+JQL='type = Bug and project not in (VUL, JS, SQP, SEC, SES, SYS) AND priority = P3'
 
 # Fetch issues from Jira using the JQL
 response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
   "$JIRA_URL/rest/api/3/search?jql=$JQL&fields=created&maxResults=200")
+
+echo curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" "$JIRA_URL/rest/api/3/search?jql=$JQL&fields=created&maxResults=200"
 
 # Calculate average time open
 total_days=0

@@ -12,11 +12,12 @@ JIRA_USER="$JIRA_USERNAME"
 JIRA_API_TOKEN="$JIRA_API_TOKEN"
 
 # Calculate the start and end dates for last week
-end_date=$(date -v-monday -v-1w "+%Y-%m-%d")
-start_date=$(date -v-monday -v-2w "+%Y-%m-%d")
+end_date=$(date -v-monday -v-0w "+%Y-%m-%d")
+start_date=$(date -v-monday -v-1w "+%Y-%m-%d")
 
 # JQL for fetching issues you commented on last week
 JQL="commentedBy = currentUser() AND updated >= '$start_date' AND updated < '$end_date'"
+echo $JQL
 
 # Fetch issues from Jira using the JQL
 response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
