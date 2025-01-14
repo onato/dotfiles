@@ -12,7 +12,7 @@ JIRA_USER="$JIRA_USERNAME"
 JIRA_API_TOKEN="$JIRA_API_TOKEN"
 
 # JQL for fetching issues
-JQL='type = Bug and project not in (VUL, JS, SQP, SEC, SES, SYS) AND priority = P3'
+JQL='type = Bug and project not in (VUL, JS, SQP, SEC, SES, SYS) AND priority = P3 AND status WAS NOT IN ("Resolved", "Closed", "Done", "Won'\''t do") DURING (startOfMonth(-2), endOfMonth(-2))'
 
 # URL encode the JQL
 encoded_jql=$(jq -rn --arg jql "$JQL" '$jql|@uri')
