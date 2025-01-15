@@ -46,7 +46,11 @@ for month_offset in {0..0}; do
       created=$(echo $issue | jq -r '.fields.created')
       issue_key=$(echo $issue | jq -r '.key')
       created_date=$(date -u -j -f "%Y-%m-%dT%H:%M:%S" "${created:0:19}" "+%s")
-      current_date=$(date -v-${month_offset}m -v1d -v+1m "+%s")
+      if [ $month_offset -eq 0 ]; then
+        current_date=$(date "+%s")
+      else
+        current_date=$(date -v-${month_offset}m -v1d -v+1m "+%s")
+      fi
       days_open=$(((current_date - created_date) / 86400))
       total_days=$((total_days + days_open))
       issue_count=$((issue_count + 1))
