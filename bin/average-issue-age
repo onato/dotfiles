@@ -26,7 +26,7 @@ age_data_file="age_data.dat"
 echo "# Month IssueCount" >$issue_data_file
 echo "# Month AverageAge" >$age_data_file
 
-for month_offset in {1..0}; do
+for month_offset in {16..0}; do
   # Calculate the month name for the current offset
   month_name=$(date -v-${month_offset}m "+%B")
   JQL="type = Bug and project = $PROJECT_KEY AND priority = P3 AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset)) AND created <= endOfMonth(-$month_offset)"
