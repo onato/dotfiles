@@ -12,14 +12,14 @@ JIRA_USER="$JIRA_USERNAME"
 JIRA_API_TOKEN="$JIRA_API_TOKEN"
 
 # Check for project parameter
-if [ -z "$1" ]; then
-  echo "Usage: $0 <project_key>"
-  exit 1
-fi
 PROJECT_KEY="$1"
 
-# Create output subdirectory for the project
-output_dir="output/$PROJECT_KEY"
+# Create output subdirectory
+if [ -z "$PROJECT_KEY" ]; then
+  output_dir="output/all_projects"
+else
+  output_dir="output/$PROJECT_KEY"
+fi
 mkdir -p $output_dir
 issue_data_file="issue_data.dat"
 age_data_file="age_data.dat"
@@ -29,7 +29,11 @@ echo "# Month AverageAge" >$age_data_file
 for month_offset in {16..0}; do
   # Calculate the month name for the current offset
   month_name=$(date -v-${month_offset}m "+%B")
-  JQL="type = Bug and project = $PROJECT_KEY AND priority = P3 AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset)) AND created <= endOfMonth(-$month_offset)"
+  if [ -z "$PROJECT_KEY" ]; then
+    JQL="type = Bug AND priority = P3 AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset)) AND created <= endOfMonth(-$month_offset)"
+  else
+    JQL="type = Bug and project = $PROJECT_KEY AND priority = P3 AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset)) AND created <= endOfMonth(-$month_offset)"
+  fi
 
   # URL encode the JQL
   encoded_jql=$(jq -rn --arg jql "$JQL" '$jql|@uri')
