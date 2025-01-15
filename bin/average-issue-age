@@ -17,7 +17,7 @@ age_data_file="age_data.dat"
 echo "# Month IssueCount" >$issue_data_file
 echo "# Month AverageAge" >$age_data_file
 
-for month_offset in {0..0}; do
+for month_offset in {1..0}; do
   # Calculate the month name for the current offset
   month_name=$(date -v-${month_offset}m "+%B")
   JQL="type = Bug and project not in (DES, VUL, JS, SQP, SEC, SES, SYS) AND priority = P3 AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset)) AND created <= endOfMonth(-$month_offset)"
@@ -49,13 +49,13 @@ for month_offset in {0..0}; do
       if [ $month_offset -eq 0 ]; then
         current_date=$(date "+%s")
       else
-        current_date=$(date -v-${month_offset}m -v1d -v+1m "+%s")
+        current_date=$(date -v-${month_offset}m -v1d -v+1m -v-1d "+%s")
       fi
       days_open=$(((current_date - created_date) / 86400))
       total_days=$((total_days + days_open))
       issue_count=$((issue_count + 1))
       issue_url="$JIRA_URL/browse/$issue_key"
-      echo -e "Issue $issue_key has been open for $days_open days. \t\t$issue_url"
+      echo -e "Issue $issue_key has been open for $days_open days. \t\t$issue_url Opened: $created Closed: $(date -r $current_date)"
     done
 
     start_at=$((start_at + 100))
