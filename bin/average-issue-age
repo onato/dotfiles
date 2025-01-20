@@ -23,15 +23,17 @@ else
   output_dir="output/$PROJECT_KEY"
 fi
 mkdir -p $output_dir
-issue_data_file="issue_data.dat"
-age_data_file="age_data.dat"
+cache_dir="$output_dir/cache"
+mkdir -p $cache_dir
+issue_data_file="$cache_dir/issue_data.dat"
+age_data_file="$cache_dir/age_data.dat"
 echo "# Month IssueCount" >$issue_data_file
 echo "# Month AverageAge" >$age_data_file
 
 for month_offset in {16..0}; do
   # Calculate the month name for the current offset
   month_name=$(date -v-${month_offset}m "+%B")
-  cache_file="$output_dir/${month_name}_cache.txt"
+  cache_file="$cache_dir/${month_name}_cache.txt"
 
   # Check if cache exists for past months
   if [ $month_offset -ne 0 ] && [ -f "$cache_file" ]; then
