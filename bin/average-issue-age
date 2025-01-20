@@ -33,7 +33,8 @@ echo "# Month AverageAge" >$age_data_file
 for month_offset in {16..0}; do
   # Calculate the month name for the current offset
   month_name=$(date -v-${month_offset}m "+%B")
-  cache_file="$cache_dir/${month_name}_cache.txt"
+  month_year=$(date -v-${month_offset}m "+%Y-%m")
+  cache_file="$cache_dir/${month_year}.txt"
 
   # Check if cache exists for past months
   if [ $month_offset -ne 0 ] && [ -f "$cache_file" ]; then
