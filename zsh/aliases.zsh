@@ -14,6 +14,8 @@ alias vimrc="vim ~/.config/nvim/lua/custom/init.lua"
 alias show_sim_touch="defaults write com.apple.iphonesimulator ShowSingleTouches 1"
 alias tn="tmux new -s $(basename $(pwd))"
 alias gcd='cd "$(git worktree list --porcelain | grep worktree | awk '"'"'{print $2}'"'"' | fzf)"'
+alias remove-worktree='git worktree remove "$(git worktree list --porcelain | grep worktree | awk '"'"'{print $2}'"'"' | fzf)"'
+alias ssh-stephen="ssh-keygen -R stephen-williams.dev.intellum.com; ssh -o StrictHostKeyChecking=no -A ubuntu@stephen-williams.dev.intellum.com"
 
 alias r=ranger
 alias cat=bat
@@ -99,15 +101,18 @@ alias gd='git diff'
 # Xcode
 
 function xc() {
-  project_file=$(cat <<EOF | ruby -rfileutils
+project_file=$(cat <<EOF | ruby -rfileutils
   files = Dir.glob('**/*.{xcworkspace,xcodeproj}')
     .reject {|p|
       p.include?('Pods') ||
       p.include?('xcodeproj/project.xcworkspace') }
-    .map {|x| [x, x.scan(/\//).count]}
-    .sort {|a, b| a.last <=> b.last || a.first <=> b.first }
-    .map {|x| x.first }
-  puts (files + Dir.glob('Package.swift')).first
+    .sort_by {|x| [x.scan(/\//).count, x] }
+  
+  workspace = files.find { |f| f.end_with?('.xcworkspace') }
+  project = files.find { |f| f.end_with?('.xcodeproj') }
+  package = Dir.glob('Package.swift').first
+  
+  puts workspace || project || package
 EOF
 )
 

@@ -26,7 +26,7 @@ PATH=$JAVA_HOME/bin/:$PATH
 export GEM_HOME=$HOME/gems
 PATH=$HOME/gems/bin:$PATH
 
-export PATH="$(brew --prefix)/opt/postgresql@12/bin:$PATH"
+export PATH="$(brew --prefix)/opt/postgresql@14/bin:$PATH"
 
 PATH=~/.gvm/bin:${PATH}
 [[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
