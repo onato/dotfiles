@@ -34,13 +34,16 @@ for month_offset in {16..0}; do
   # Calculate the month name for the current offset
   month_name=$(date -v-${month_offset}m "+%B")
   month_year=$(date -v-${month_offset}m "+%Y-%m")
-  cache_file="$cache_dir/${month_year}.txt"
+  issue_cache_file="$cache_dir/issue-${month_year}.txt"
+  age_cache_file="$cache_dir/age-${month_year}.txt"
 
   # Check if cache exists for past months
-  if [ $month_offset -ne 0 ] && [ -f "$cache_file" ]; then
+  if [ $month_offset -ne 0 ] && [ -f "$issue_cache_file" ]; then
     echo "Using cached data for $month_name"
     cat "$cache_file" >>$issue_data_file
-    cat "$cache_file" >>$age_data_file
+  fi
+  if [ $month_offset -ne 0 ] && [ -f "$age_cache_file" ]; then
+    cat "$age_cache_file" >>$age_data_file
     continue
   fi
   # Calculate the month name for the current offset
@@ -97,8 +100,8 @@ for month_offset in {16..0}; do
   fi
   # Cache the data for past months
   if [ $month_offset -ne 0 ]; then
-    echo "$month_name $issue_count" >"$cache_file"
-    echo "$month_name $average_days" >>"$cache_file"
+    echo "$month_name $issue_count" >"$issue_cache_file"
+    echo "$month_name $average_days" >>"$age_cache_file"
   fi
 
   echo "$month_name $issue_count" >>$issue_data_file
