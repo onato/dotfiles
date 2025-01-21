@@ -25,7 +25,7 @@ fi
 mkdir -p $output_dir
 cache_dir="$output_dir/cache"
 mkdir -p $cache_dir
-issue_data_file="$cache_dir/issue_data.dat"
+issue_data_file="$output_dir/issue_data.dat"
 age_data_file="$cache_dir/age_data.dat"
 echo "# Month IssueCount" >$issue_data_file
 echo "# Month AverageAge" >$age_data_file
