@@ -1,0 +1,40 @@
+# This is meant to be run from an alias like:
+# alias new-worktree="source new-exceed-worktree"
+# This is necessary as this script is meant to change the current directory
+
+# Attempt to change to the ../master or ../main directory
+if [ -d "../master" ]; then
+  cd ../master || { git pull origin master; }
+elif [ -d "../main" ]; then
+  cd ../main || { git pull origin main; }
+elif [ -d "master" ]; then
+  cd master || { git pull origin master; }
+elif [ -d "main" ]; then
+  cd main || { git pull origin main; }
+else
+  echo "Neither ../master nor ../main directory exists. Exiting."
+fi
+
+cd ..
+
+# Prompt for issue number
+echo "Enter the issue number (e.g., CON-2594): "
+read issue_number
+
+# Prompt for description
+echo "Enter the description: "
+read description
+
+# Replace spaces and special characters in the description with dashes
+slug=$(echo "$description" | tr '[:upper:]' '[:lower:]' | tr -s ' ' '-' | tr -cd '[:alnum:]-')
+
+# Combine the issue number, username, and the cleaned-up description
+username="stephen"  # You can change this to any username you prefer
+branch_name="${issue_number}--${username}--${slug}"
+
+# Print the git worktree command
+git worktree add $branch_name
+
+cd $branch_name
+
+refresh-rails

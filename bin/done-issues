@@ -22,7 +22,7 @@ JIRA_API_URL="https://$JIRA_DOMAIN/rest/api/2/search?jql=$ENCODED_JQL"
 # Fetch the issues from Jira and format the output
 curl -s -u $JIRA_USERNAME:$JIRA_API_TOKEN -X GET \
   -H "Content-Type: application/json" $JIRA_API_URL |
-  jq '.issues[] | {title: .fields.summary, url: .self}'
+  jq '.issues[] | {key: .key, title: .fields.summary, url: .self}'
 
 # Print the count of issues found
 curl -s -u $JIRA_USERNAME:$JIRA_API_TOKEN -X GET \

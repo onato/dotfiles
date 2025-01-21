@@ -27,9 +27,9 @@ PREV_YEAR=${CURRENT_YEAR+ 1}
 YEAR=$CURRENT_YEAR
 MONTH=$CURRENT_MONTH
 
-while [ $YEAR -gt 2024 ] || [ $MONTH -gt 7 ]; do
+while [ $YEAR -gt 2024 ] || [ $MONTH -gt 6 ]; do
   # Calculate the relative month offset
-  OFFSET=$(( (CURRENT_YEAR - YEAR) * 12 + (CURRENT_MONTH - MONTH) ))
+  OFFSET=$(((CURRENT_YEAR - YEAR) * 12 + (CURRENT_MONTH - MONTH)))
 
   # Jira JQL query to find issues assigned to you and marked as done in the specific month
   JQL="assignee = currentUser() AND statusCategory = Done AND statusCategoryChangedDate >= startOfMonth(-${OFFSET}M) AND statusCategoryChangedDate < endOfMonth(-$((OFFSET))M)"

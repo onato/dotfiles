@@ -1,16 +1,38 @@
 #!/bin/bash
 
-default_branch=$(git remote show origin | grep 'HEAD branch' | awk '{print $NF}')
+echo "Fetching JIRA issues..."
 
-# Query the "In Progress" issue from Jira
-# Replace 'status = "In Progress"' with the actual JQL that matches your project's configuration
-ISSUE_KEY=$(jira issues list --plain -q'status = "In Progress"' --plain -a"$(jira me)"| awk -F '\t' 'NR > 1 {print $2}' | head -n 1)
+# Get the default branch
+default_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's|^refs/remotes/origin/||')
+
+# Query the "In Progress" issues from Jira for the current user
+issues=$(jira issues list --plain -q 'status = "In Progress"' -a "$(jira me)" | awk -F '\t' 'NR > 1 && $1 !~ /Initiative/ {print $3 "\t" $4}')
 ISSUE_DESC=$(git log -1 --pretty=format:"%s")
-if [ -z "$ISSUE_KEY" ]; then
-    echo "No 'In Progress' issue found."
-    exit 1
+
+# Check if there are any issues
+if [[ -z "$issues" ]]; then
+  echo "No issues found in progress for the current user."
+  read -p "Please enter the ISSUE_KEY: " ISSUE_KEY
+else
+  # Present the user with a menu of issues to select
+  echo "Select an issue:"
+  # Create an array of issues, preserving spaces
+  IFS=$'\n' # Set Internal Field Separator to newline to handle spaces properly
+  issue_list=($(echo "$issues" | awk -F '\t' '{print $1 " - " $2}'))
+
+  select issue in "${issue_list[@]}"; do
+    if [[ -n "$issue" ]]; then
+      ISSUE_KEY=$(echo "$issue" | awk -F ' - ' '{print $1}')
+      break
+    else
+      echo "Invalid selection, try again."
+    fi
+  done
 fi
-echo "Found issue: $ISSUE_KEY"
+
+# Output the selected issue
+echo "Issue Key: $ISSUE_KEY"
+echo "Description: $ISSUE_DESC"
 
 # Create a new branch for this issue
 # Modify the branch name format as needed
@@ -30,14 +52,13 @@ echo "Pull request created: $PR_URL"
 # This step requires that branch protection rules allow for automatic merging without review
 # You might need to adjust or remove this step based on your project's requirements
 # If the merge fails with squash, try merge
-gh pr merge "$BRANCH_NAME" --squash --subject "$ISSUE_DESC #$ISSUE_KEY" --delete-branch \
-    || gh pr merge "$BRANCH_NAME" --merge --subject "$ISSUE_DESC #$ISSUE_KEY" --delete-branch
+gh pr merge "$BRANCH_NAME" --squash --subject "$ISSUE_DESC #$ISSUE_KEY" --delete-branch ||
+  gh pr merge "$BRANCH_NAME" --merge --subject "$ISSUE_DESC #$ISSUE_KEY" --delete-branch
 
 # Step 7: Switch back to the previous branch (assuming 'main')
 git checkout $default_branch
 
 # Step 8: Pull the latest changes
-git pull origin $default_branch 
+git pull origin $default_branch
 
 echo "Done."
-
