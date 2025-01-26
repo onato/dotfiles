@@ -15,7 +15,7 @@ JIRA_API_TOKEN="$JIRA_API_TOKEN"
 PROJECT_KEY="$1"
 
 # Calculate the start date for 3 months ago
-start_date=$(date -v-3m "+%Y-%m-%d")
+start_date=$(date -v-6m "+%Y-%m-%d")
 
 # JQL to find bugs closed in the last 3 months
 JQL="type = Bug AND status changed to (\"Resolved\", \"Closed\", \"Done\") after \"$start_date\""
@@ -41,7 +41,7 @@ while true; do
 
   while IFS= read -r issue; do
     assignee=$(echo "$issue" | jq -r '.fields.assignee.displayName // "Unassigned"')
-    echo "$assignee" >> "$user_bug_count_file"
+    echo "$assignee" >>"$user_bug_count_file"
   done <<<"$issues"
 
   start_at=$((start_at + 100))
