@@ -24,7 +24,7 @@ if [ -n "$PROJECT_KEY" ]; then
 fi
 
 # URL encode the JQL
-encoded_jql=$(jq -rn --arg jql "$JQL" '$jql|@uri')
+encoded_jql=$(echo "$JQL" | jq -sRr @uri)
 
 start_at=0
 declare -A user_bug_count
@@ -34,17 +34,15 @@ while true; do
   response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
     "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=assignee&maxResults=100&startAt=$start_at")
 
-  issues=$(echo $response | jq -c '.issues[]')
+  issues=$(echo "$response" | jq -c '.issues[]?')
   if [ -z "$issues" ]; then
     break
   fi
 
-  for issue in $issues; do
-    assignee=$(echo $issue | jq -r '.fields.assignee.displayName')
-    if [ -n "$assignee" ]; then
-      user_bug_count["$assignee"]=$((user_bug_count["$assignee"] + 1))
-    fi
-  done
+  while IFS= read -r issue; do
+    assignee=$(echo "$issue" | jq -r '.fields.assignee.displayName // "Unassigned"')
+    user_bug_count["$assignee"]=$((user_bug_count["$assignee"] + 1))
+  done <<< "$issues"
 
   start_at=$((start_at + 100))
 done
