@@ -48,6 +48,8 @@ while true; do
 done
 
 echo "Bugs closed in the last 3 months:"
-for user in "${!user_bug_count[@]}" | sort -nr -k2; do
-  echo "$user: ${user_bug_count[$user]}"
+for user in "${!user_bug_count[@]}"; do
+  printf "%s %d\n" "$user" "${user_bug_count[$user]}"
+done | sort -nr -k2 | while read -r user count; do
+  echo "$user: $count"
 done
