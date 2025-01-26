@@ -42,14 +42,14 @@ while true; do
   while IFS= read -r issue; do
     assignee=$(echo "$issue" | jq -r '.fields.assignee.displayName // "Unassigned"')
     user_bug_count["$assignee"]=$((user_bug_count["$assignee"] + 1))
-  done <<< "$issues"
+  done <<<"$issues"
 
   start_at=$((start_at + 100))
 done
 
 echo "Bugs closed in the last 3 months:"
 for user in "${!user_bug_count[@]}"; do
-  printf "%s %d\n" "$user" "${user_bug_count[$user]}"
-done | sort -nr -k2 | while read -r user count; do
+  printf "%s %d\n" "${user_bug_count[$user]}" "$user"
+done | sort -nr -k1 | while read -r user count; do
   echo "$count: $user"
 done
