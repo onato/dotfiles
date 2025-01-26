@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Check if jq is installed
+if ! command -v jq &>/dev/null; then
+  echo "jq could not be found, please install it to proceed."
+  exit
+fi
+
+# Jira credentials and URL
+JIRA_URL="https://$JIRA_DOMAIN"
+JIRA_USER="$JIRA_USERNAME"
+JIRA_API_TOKEN="$JIRA_API_TOKEN"
+
+# Check for project parameter
+PROJECT_KEY="$1"
+
+# Calculate the start date for 3 months ago
+start_date=$(date -v-3m "+%Y-%m-%d")
+
+# JQL to find bugs closed in the last 3 months
+JQL="type = Bug AND status changed to (\"Resolved\", \"Closed\", \"Done\") after \"$start_date\""
+if [ -n "$PROJECT_KEY" ]; then
+  JQL="project = $PROJECT_KEY AND $JQL"
+fi
+
+# URL encode the JQL
+encoded_jql=$(jq -rn --arg jql "$JQL" '$jql|@uri')
+
+start_at=0
+declare -A user_bug_count
+
+while true; do
+  # Fetch issues from Jira using the encoded JQL
+  response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
+    "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=assignee&maxResults=100&startAt=$start_at")
+
+  issues=$(echo $response | jq -c '.issues[]')
+  if [ -z "$issues" ]; then
+    break
+  fi
+
+  for issue in $issues; do
+    assignee=$(echo $issue | jq -r '.fields.assignee.displayName')
+    if [ -n "$assignee" ]; then
+      user_bug_count["$assignee"]=$((user_bug_count["$assignee"] + 1))
+    fi
+  done
+
+  start_at=$((start_at + 100))
+done
+
+echo "Bugs closed in the last 3 months:"
+for user in "${!user_bug_count[@]}"; do
+  echo "$user: ${user_bug_count[$user]}"
+done
