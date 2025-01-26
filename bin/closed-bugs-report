@@ -27,7 +27,7 @@ fi
 encoded_jql=$(echo "$JQL" | jq -sRr @uri)
 
 start_at=0
-declare -A user_bug_count
+user_bug_count_file=$(mktemp)
 
 while true; do
   # Fetch issues from Jira using the encoded JQL
@@ -41,15 +41,16 @@ while true; do
 
   while IFS= read -r issue; do
     assignee=$(echo "$issue" | jq -r '.fields.assignee.displayName // "Unassigned"')
-    user_bug_count["$assignee"]=$((user_bug_count["$assignee"] + 1))
+    echo "$assignee" >> "$user_bug_count_file"
   done <<<"$issues"
 
   start_at=$((start_at + 100))
 done
 
 echo "Bugs closed in the last 3 months:"
-for user in "${!user_bug_count[@]}"; do
-  printf "%s %d\n" "${user_bug_count[$user]}" "$user"
-done | sort -nr -k1 | while read -r user count; do
+sort "$user_bug_count_file" | uniq -c | sort -nr | while read -r count user; do
   echo "$count: $user"
 done
+
+# Clean up the temporary file
+rm "$user_bug_count_file"
