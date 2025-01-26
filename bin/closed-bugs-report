@@ -32,7 +32,7 @@ user_bug_count_file=$(mktemp)
 while true; do
   # Fetch issues from Jira using the encoded JQL
   response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
-    "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=assignee&maxResults=100&startAt=$start_at")
+    "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=assignee&expand=changelog&maxResults=100&startAt=$start_at")
 
   issues=$(echo "$response" | jq -c '.issues[]?')
   if [ -z "$issues" ]; then
@@ -40,8 +40,14 @@ while true; do
   fi
 
   while IFS= read -r issue; do
-    assignee=$(echo "$issue" | jq -r '.fields.assignee.displayName // "Unassigned"')
-    echo "$assignee" >>"$user_bug_count_file"
+    assignee=$(echo "$issue" | jq -r '.fields.assignee.displayName // empty')
+    if [ -n "$assignee" ]; then
+      echo "$assignee" >>"$user_bug_count_file"
+    else
+      # Find the user who changed the status to "Done"
+      closed_by=$(echo "$issue" | jq -r '.changelog.histories[] | select(.items[] | select(.field == "status" and .toString == "Done")) | .author.displayName' | head -n 1)
+      echo "${closed_by:-Unknown}" >>"$user_bug_count_file"
+    fi
   done <<<"$issues"
 
   start_at=$((start_at + 100))
