@@ -17,110 +17,118 @@ PROJECT_KEY="$1"
 # Define colors for the graph lines
 ISSUE_COUNT_COLOR="#FF6600"
 AVERAGE_AGE_COLOR="#00ba4a"
-if [ -z "$PROJECT_KEY" ]; then
-  output_dir="output/all_projects"
-else
-  output_dir="output/$PROJECT_KEY"
-fi
-mkdir -p $output_dir
-cache_dir="$output_dir/cache"
-mkdir -p $cache_dir
-issue_data_file="$output_dir/issue_data.dat"
-age_data_file="$output_dir/age_data.dat"
-issue_csv_file="$output_dir/issue_data.csv"
-age_csv_file="$output_dir/age_data.csv"
-echo "Month,IssueCount" >$issue_csv_file
-echo "Month,AverageAge" >$age_csv_file
-echo "# Month IssueCount" >$issue_data_file
-echo "# Month AverageAge" >$age_data_file
 
-for month_offset in {16..0}; do
-  # Calculate the month name for the current offset
-  month_name=$(date -v-${month_offset}m "+%B")
-  month_year=$(date -v-${month_offset}m "+%Y-%m")
-  issue_cache_file="$cache_dir/issue-${month_year}.txt"
-  age_cache_file="$cache_dir/age-${month_year}.txt"
+# Define priorities and corresponding directories
+declare -A priorities=( ["All_Bugs"]="" ["P3"]=" AND priority = P3" ["P4"]=" AND priority = P4" )
 
-  # Check if cache exists for past months
-  if [ $month_offset -ne 0 ] && [ -f "$issue_cache_file" ]; then
-    echo "Using cached data for $month_name"
-    cat "$cache_file" >>$issue_data_file
+for priority_dir in "${!priorities[@]}"; do
+  priority_jql="${priorities[$priority_dir]}"
+  
+  if [ -z "$PROJECT_KEY" ]; then
+    output_dir="output/$priority_dir/all_projects"
+  else
+    output_dir="output/$priority_dir/$PROJECT_KEY"
   fi
-  if [ $month_offset -ne 0 ] && [ -f "$age_cache_file" ]; then
-    cat "$age_cache_file" >>$age_data_file
-    continue
-  fi
-  # Calculate the month name for the current offset
-  month_name=$(date -v-${month_offset}m "+%B")
-  JQL="type = Bug AND priority = P3 AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset)) AND created <= endOfMonth(-$month_offset)"
-  if [ -n "$PROJECT_KEY" ]; then
-    JQL="project = $PROJECT_KEY AND $JQL"
-  fi
+  mkdir -p $output_dir
+  cache_dir="$output_dir/cache"
+  mkdir -p $cache_dir
+  issue_data_file="$output_dir/issue_data.dat"
+  age_data_file="$output_dir/age_data.dat"
+  issue_csv_file="$output_dir/issue_data.csv"
+  age_csv_file="$output_dir/age_data.csv"
+  echo "Month,IssueCount" >$issue_csv_file
+  echo "Month,AverageAge" >$age_csv_file
+  echo "# Month IssueCount" >$issue_data_file
+  echo "# Month AverageAge" >$age_data_file
 
-  # URL encode the JQL
-  encoded_jql=$(jq -rn --arg jql "$JQL" '$jql|@uri')
+  for month_offset in {16..0}; do
+    # Calculate the month name for the current offset
+    month_name=$(date -v-${month_offset}m "+%B")
+    month_year=$(date -v-${month_offset}m "+%Y-%m")
+    issue_cache_file="$cache_dir/issue-${month_year}.txt"
+    age_cache_file="$cache_dir/age-${month_year}.txt"
 
-  start_at=0
-  total_days=0
-  issue_count=0
-
-  while true; do
-    # Fetch issues from Jira using the encoded JQL
-    response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
-      "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=created&maxResults=100&startAt=$start_at")
-
-    # echo curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
-    #   "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=created&maxResults=100&startAt=$start_at"
-
-    issues=$(echo $response | jq -c '.issues[]')
-    if [ -z "$issues" ]; then
-      break
+    # Check if cache exists for past months
+    if [ $month_offset -ne 0 ] && [ -f "$issue_cache_file" ]; then
+      echo "Using cached data for $month_name"
+      cat "$cache_file" >>$issue_data_file
+    fi
+    if [ $month_offset -ne 0 ] && [ -f "$age_cache_file" ]; then
+      cat "$age_cache_file" >>$age_data_file
+      continue
+    fi
+    # Calculate the month name for the current offset
+    month_name=$(date -v-${month_offset}m "+%B")
+    JQL="type = Bug $priority_jql AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset)) AND created <= endOfMonth(-$month_offset)"
+    if [ -n "$PROJECT_KEY" ]; then
+      JQL="project = $PROJECT_KEY AND $JQL"
     fi
 
-    for issue in $issues; do
-      created=$(echo $issue | jq -r '.fields.created')
-      issue_key=$(echo $issue | jq -r '.key')
-      created_date=$(date -u -j -f "%Y-%m-%dT%H:%M:%S" "${created:0:19}" "+%s")
-      if [ $month_offset -eq 0 ]; then
-        current_date=$(date "+%s")
-      else
-        current_date=$(date -v-${month_offset}m -v1d -v+1m -v-1d "+%s")
+    # URL encode the JQL
+    encoded_jql=$(jq -rn --arg jql "$JQL" '$jql|@uri')
+
+    start_at=0
+    total_days=0
+    issue_count=0
+
+    while true; do
+      # Fetch issues from Jira using the encoded JQL
+      response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
+        "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=created&maxResults=100&startAt=$start_at")
+
+      # echo curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
+      #   "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=created&maxResults=100&startAt=$start_at"
+
+      issues=$(echo $response | jq -c '.issues[]')
+      if [ -z "$issues" ]; then
+        break
       fi
-      days_open=$(((current_date - created_date) / 86400))
-      total_days=$((total_days + days_open))
-      issue_count=$((issue_count + 1))
-      issue_url="$JIRA_URL/browse/$issue_key"
-      # echo -e "Issue $issue_key has been open for $days_open days. \t\t$issue_url Opened: $created Closed: $(date -r $current_date)"
+
+      for issue in $issues; do
+        created=$(echo $issue | jq -r '.fields.created')
+        issue_key=$(echo $issue | jq -r '.key')
+        created_date=$(date -u -j -f "%Y-%m-%dT%H:%M:%S" "${created:0:19}" "+%s")
+        if [ $month_offset -eq 0 ]; then
+          current_date=$(date "+%s")
+        else
+          current_date=$(date -v-${month_offset}m -v1d -v+1m -v-1d "+%s")
+        fi
+        days_open=$(((current_date - created_date) / 86400))
+        total_days=$((total_days + days_open))
+        issue_count=$((issue_count + 1))
+        issue_url="$JIRA_URL/browse/$issue_key"
+        # echo -e "Issue $issue_key has been open for $days_open days. \t\t$issue_url Opened: $created Closed: $(date -r $current_date)"
+      done
+
+      start_at=$((start_at + 100))
     done
 
-    start_at=$((start_at + 100))
+    if [ $issue_count -eq 0 ]; then
+      echo "No issues found for month offset $month_offset."
+    else
+      average_days=$(echo "scale=2; $total_days / $issue_count" | bc)
+      echo "Month: $month_name, Issues found: $issue_count, Average time issues have been open: $average_days days"
+    fi
+    # Cache the data for past months
+    if [ $month_offset -ne 0 ]; then
+      echo "$month_name $issue_count" >"$issue_cache_file"
+      echo "$month_name $average_days" >>"$age_cache_file"
+    fi
+
+    echo "$month_name $issue_count" >>$issue_data_file
+    echo "$month_name $average_days" >>$age_data_file
+    echo "$month_year,$issue_count" >>$issue_csv_file
+    echo "$month_year,$average_days" >>$age_csv_file
   done
 
-  if [ $issue_count -eq 0 ]; then
-    echo "No issues found for month offset $month_offset."
-  else
-    average_days=$(echo "scale=2; $total_days / $issue_count" | bc)
-    echo "Month: $month_name, Issues found: $issue_count, Average time issues have been open: $average_days days"
-  fi
-  # Cache the data for past months
-  if [ $month_offset -ne 0 ]; then
-    echo "$month_name $issue_count" >"$issue_cache_file"
-    echo "$month_name $average_days" >>"$age_cache_file"
-  fi
+  echo "Data saved to $issue_csv_file and $age_csv_file"
 
-  echo "$month_name $issue_count" >>$issue_data_file
-  echo "$month_name $average_days" >>$age_data_file
-  echo "$month_year,$issue_count" >>$issue_csv_file
-  echo "$month_year,$average_days" >>$age_csv_file
+  # Generate graphs using gnuplot
+  gnuplot -e "set terminal png size 800,600; set output '$output_dir/issue_count.png'; set title 'Number of Issues per Month'; set xlabel 'Month'; set ylabel 'Issue Count'; set yrange [0:*]; set xtics rotate; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues';"
+  gnuplot -e "set terminal png size 800,600; set output '$output_dir/average_age.png'; set title 'Average Issue Age per Month'; set xlabel 'Month'; set ylabel 'Average Age (days)'; set yrange [0:*]; set xtics rotate; plot '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age';"
+
+  # Generate combined graph using gnuplot
+  gnuplot -e "set terminal png size 800,600; set output '$output_dir/combined_graph.png'; set title 'Issues and Average Age per Month'; set xlabel 'Month'; set ylabel 'Issue Count'; set y2label 'Average Age (days)'; set ytics nomirror; set y2tics; set xtics rotate; set yrange [0:*]; set y2range [0:*]; set ylabel 'Issue Count' textcolor rgb '$ISSUE_COUNT_COLOR'; set y2label 'Average Age (days)' textcolor rgb '$AVERAGE_AGE_COLOR'; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues' axis x1y1 linecolor rgb '$ISSUE_COUNT_COLOR', '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age' axis x1y2 linecolor rgb '$AVERAGE_AGE_COLOR';"
+
+  echo "Graphs generated for $priority_dir: issue_count.png, average_age.png, and combined_graph.png"
 done
-
-echo "Data saved to $issue_csv_file and $age_csv_file"
-
-# Generate graphs using gnuplot
-gnuplot -e "set terminal png size 800,600; set output '$output_dir/issue_count.png'; set title 'Number of Issues per Month'; set xlabel 'Month'; set ylabel 'Issue Count'; set yrange [0:*]; set xtics rotate; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues';"
-gnuplot -e "set terminal png size 800,600; set output '$output_dir/average_age.png'; set title 'Average Issue Age per Month'; set xlabel 'Month'; set ylabel 'Average Age (days)'; set yrange [0:*]; set xtics rotate; plot '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age';"
-
-# Generate combined graph using gnuplot
-gnuplot -e "set terminal png size 800,600; set output '$output_dir/combined_graph.png'; set title 'Issues and Average Age per Month'; set xlabel 'Month'; set ylabel 'Issue Count'; set y2label 'Average Age (days)'; set ytics nomirror; set y2tics; set xtics rotate; set yrange [0:*]; set y2range [0:*]; set ylabel 'Issue Count' textcolor rgb '$ISSUE_COUNT_COLOR'; set y2label 'Average Age (days)' textcolor rgb '$AVERAGE_AGE_COLOR'; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues' axis x1y1 linecolor rgb '$ISSUE_COUNT_COLOR', '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age' axis x1y2 linecolor rgb '$AVERAGE_AGE_COLOR';"
-
-echo "Graphs generated: issue_count.png, average_age.png, and combined_graph.png"
