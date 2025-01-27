@@ -117,10 +117,10 @@ done
 echo "Data saved to $issue_csv_file and $age_csv_file"
 
 # Generate graphs using gnuplot
-gnuplot -e "set terminal png size 800,600; set output '$output_dir/issue_count.png'; set title 'Number of Issues per Month'; set xlabel 'Month'; set ylabel 'Issue Count'; set xtics rotate; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues';"
-gnuplot -e "set terminal png size 800,600; set output '$output_dir/average_age.png'; set title 'Average Issue Age per Month'; set xlabel 'Month'; set ylabel 'Average Age (days)'; set xtics rotate; plot '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age';"
+gnuplot -e "set terminal png size 800,600; set output '$output_dir/issue_count.png'; set title 'Number of Issues per Month'; set xlabel 'Month'; set ylabel 'Issue Count'; set yrange [0:*]; set xtics rotate; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues';"
+gnuplot -e "set terminal png size 800,600; set output '$output_dir/average_age.png'; set title 'Average Issue Age per Month'; set xlabel 'Month'; set ylabel 'Average Age (days)'; set yrange [0:*]; set xtics rotate; plot '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age';"
 
 # Generate combined graph using gnuplot
-gnuplot -e "set terminal png size 800,600; set output '$output_dir/combined_graph.png'; set title 'Issues and Average Age per Month'; set xlabel 'Month'; set ylabel 'Issue Count'; set y2label 'Average Age (days)'; set ytics nomirror; set y2tics; set xtics rotate; set ylabel 'Issue Count' textcolor rgb '$ISSUE_COUNT_COLOR'; set y2label 'Average Age (days)' textcolor rgb '$AVERAGE_AGE_COLOR'; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues' axis x1y1 linecolor rgb '$ISSUE_COUNT_COLOR', '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age' axis x1y2 linecolor rgb '$AVERAGE_AGE_COLOR';"
+gnuplot -e "set terminal png size 800,600; set output '$output_dir/combined_graph.png'; set title 'Issues and Average Age per Month'; set xlabel 'Month'; set ylabel 'Issue Count'; set y2label 'Average Age (days)'; set ytics nomirror; set y2tics; set xtics rotate; set yrange [0:*]; set y2range [0:*]; set ylabel 'Issue Count' textcolor rgb '$ISSUE_COUNT_COLOR'; set y2label 'Average Age (days)' textcolor rgb '$AVERAGE_AGE_COLOR'; plot '$issue_data_file' using 2:xtic(1) with linespoints title 'Issues' axis x1y1 linecolor rgb '$ISSUE_COUNT_COLOR', '$age_data_file' using 2:xtic(1) with linespoints title 'Average Age' axis x1y2 linecolor rgb '$AVERAGE_AGE_COLOR';"
 
 echo "Graphs generated: issue_count.png, average_age.png, and combined_graph.png"
