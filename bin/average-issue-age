@@ -52,7 +52,7 @@ for month_offset in {16..0}; do
   fi
   # Calculate the month name for the current offset
   month_name=$(date -v-${month_offset}m "+%B")
-  JQL="type = Bug AND priority = P3 AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset)) AND created <= endOfMonth(-$month_offset)"
+  JQL="type = Bug AND priority = P4 AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset)) AND created <= endOfMonth(-$month_offset)"
   if [ -n "$PROJECT_KEY" ]; then
     JQL="project = $PROJECT_KEY AND $JQL"
   fi
@@ -90,7 +90,7 @@ for month_offset in {16..0}; do
       total_days=$((total_days + days_open))
       issue_count=$((issue_count + 1))
       issue_url="$JIRA_URL/browse/$issue_key"
-      echo -e "Issue $issue_key has been open for $days_open days. \t\t$issue_url Opened: $created Closed: $(date -r $current_date)"
+      # echo -e "Issue $issue_key has been open for $days_open days. \t\t$issue_url Opened: $created Closed: $(date -r $current_date)"
     done
 
     start_at=$((start_at + 100))
