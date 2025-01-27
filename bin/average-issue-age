@@ -19,10 +19,12 @@ ISSUE_COUNT_COLOR="#FF6600"
 AVERAGE_AGE_COLOR="#00ba4a"
 
 # Define priorities and corresponding directories
-declare -A priorities=( ["All_Bugs"]="" ["P3"]=" AND priority = P3" ["P4"]=" AND priority = P4" )
+priorities=("All_Bugs" "P3" "P4")
+priority_jqls=("" " AND priority = P3" " AND priority = P4")
 
-for priority_dir in "${!priorities[@]}"; do
-  priority_jql="${priorities[$priority_dir]}"
+for i in "${!priorities[@]}"; do
+  priority_dir="${priorities[$i]}"
+  priority_jql="${priority_jqls[$i]}"
   
   if [ -z "$PROJECT_KEY" ]; then
     output_dir="output/$priority_dir/all_projects"
