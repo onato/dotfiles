@@ -25,7 +25,7 @@ priority_jqls=("" " AND priority = P3" " AND priority = P4")
 for i in "${!priorities[@]}"; do
   priority_dir="${priorities[$i]}"
   priority_jql="${priority_jqls[$i]}"
-  
+
   if [ -z "$PROJECT_KEY" ]; then
     output_dir="output/$priority_dir/all_projects"
   else
@@ -52,8 +52,8 @@ for i in "${!priorities[@]}"; do
 
     # Check if cache exists for past months
     if [ $month_offset -ne 0 ] && [ -f "$issue_cache_file" ]; then
-      echo "Using cached data for $month_name"
-      cat "$cache_file" >>$issue_data_file
+      echo "Using cached data for $month_name: $issue_cache_file"
+      cat "$issue_cache_file" >>$issue_data_file
     fi
     if [ $month_offset -ne 0 ] && [ -f "$age_cache_file" ]; then
       cat "$age_cache_file" >>$age_data_file
@@ -64,6 +64,8 @@ for i in "${!priorities[@]}"; do
     JQL="type = Bug $priority_jql AND status WAS NOT IN (\"Resolved\", \"Closed\", \"Done\", \"Won't do\") DURING (startOfMonth(-$month_offset), endOfMonth(-$month_offset)) AND created <= endOfMonth(-$month_offset)"
     if [ -n "$PROJECT_KEY" ]; then
       JQL="project = $PROJECT_KEY AND $JQL"
+    else
+      JQL="project not in (VUL, JS, SQP, SES, SYS) AND $JQL"
     fi
 
     # URL encode the JQL
