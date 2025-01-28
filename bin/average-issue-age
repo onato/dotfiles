@@ -27,9 +27,9 @@ for i in "${!priorities[@]}"; do
   priority_jql="${priority_jqls[$i]}"
 
   if [ -z "$PROJECT_KEY" ]; then
-    output_dir="output/$priority_dir/all_projects"
+    output_dir="output/All_Projects/$priority_dir"
   else
-    output_dir="output/$priority_dir/$PROJECT_KEY"
+    output_dir="output/$PROJECT_KEY/$priority_dir"
   fi
   mkdir -p $output_dir
   cache_dir="$output_dir/cache"
