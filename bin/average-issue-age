@@ -114,7 +114,7 @@ for i in "${!priorities[@]}"; do
       echo "No issues found for month offset $month_offset."
     else
       average_days=$(echo "scale=2; $total_days / $issue_count" | bc)
-      echo "Month: $month_name, Issues found: $issue_count, Average time issues have been open: $average_days days"
+      echo -e "\033[0;32mMonth: $month_name, Issues found: $issue_count, Average time issues have been open: $average_days days\033[0m"
     fi
     # Cache the data for past months
     if [ $month_offset -ne 0 ]; then
