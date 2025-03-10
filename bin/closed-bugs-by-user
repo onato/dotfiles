@@ -36,7 +36,7 @@ for month_offset in {11..0}; do
     JQL="project not in (VUL, SQP, SES, SYS) AND $JQL"
   fi
   # URL encode the JQL
-  encoded_jql=$(printf '%s' "$JQL" | jq -sRr @uri)
+  encoded_jql=$(echo -n "$JQL" | jq -sRr @uri)
 
   start_at=0
 
@@ -51,7 +51,7 @@ for month_offset in {11..0}; do
       exit 1
     fi
 
-    issues=$(echo "$response" | jq -c '.issues[]')
+    issues=$(echo "$response" | jq -c '.issues[]' 2>/dev/null)
     if [ -z "$issues" ]; then
       break
     fi
