@@ -45,7 +45,13 @@ for month_offset in {11..0}; do
     response=$(curl -s -u $JIRA_USER:$JIRA_API_TOKEN -X GET -H "Content-Type: application/json" \
       "$JIRA_URL/rest/api/3/search?jql=$encoded_jql&fields=assignee&maxResults=100&startAt=$start_at")
 
-    issues=$(echo $response | jq -c '.issues[]')
+    # Check if the response is valid JSON
+    if ! echo "$response" | jq empty; then
+      echo "Error: Invalid JSON response from Jira"
+      exit 1
+    fi
+
+    issues=$(echo "$response" | jq -c '.issues[]')
     if [ -z "$issues" ]; then
       break
     fi
