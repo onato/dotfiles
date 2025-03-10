@@ -36,7 +36,7 @@ for month_offset in {11..0}; do
     JQL="project not in (VUL, SQP, SES, SYS) AND $JQL"
   fi
   # URL encode the JQL
-  encoded_jql=$(jq -rn --arg jql "$JQL" '$jql|@uri')
+  encoded_jql=$(echo -n "$JQL" | jq -sRr @uri)
 
   start_at=0
 
