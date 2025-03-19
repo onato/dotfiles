@@ -195,5 +195,41 @@ alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
 
 [[on-window-detected]]
-if.app-id = 'com.google.Chrome'
-run = 'move-node-to-workspace I'
+  if.app-id = 'com.google.Chrome'
+  run = 'move-node-to-workspace U'
+
+[[on-window-detected]]
+  if.app-id = 'com.github.wez.wezterm'
+  run = 'move-node-to-workspace I'
+
+[[on-window-detected]]
+  if.app-id = 'com.openai.chat'
+  run = 'move-node-to-workspace C'
+
+[[on-window-detected]]
+  if.app-id = 'com.apple.Safari'
+  run = 'move-node-to-workspace S'
+
+[[on-window-detected]]
+  if.app-id = 'com.apple.dt.Xcode'
+  run = 'move-node-to-workspace X'
+
+[[on-window-detected]]
+  if.app-id = 'com.google.android.studio'
+  run = 'move-node-to-workspace A'
+
+[[on-window-detected]]
+  if.app-id = 'com.apple.finder'
+  run = 'move-node-to-workspace F'
+  
+[[on-window-detected]]
+  if.app-id = 'com.google.Chrome.app.fmgjjmmmlfnkbppncabfkddbjimcfncm'
+  run = 'move-node-to-workspace N'
+
+[[on-window-detected]]
+  if.app-id = 'com.microsoft.VSCode'
+  run = 'move-node-to-workspace V'
+
+[[on-window-detected]]
+  if.app-id = 'com.apple.iphonesimulator'
+  run = 'move-node-to-workspace X'
